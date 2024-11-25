@@ -11,7 +11,7 @@ public class UsuarioMateria {
 
     @Enumerated(EnumType.STRING)
     private JornadaTurno jornadaTurno;
-
+    private boolean isAsset = true;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
@@ -58,6 +58,14 @@ public class UsuarioMateria {
 
     public Long getId() {
         return id;
+    }
+
+    public boolean isAsset() {
+        return isAsset;
+    }
+
+    public void setAsset(boolean asset) {
+        isAsset = asset;
     }
     //------------------------------------------------------------------------
 

@@ -16,6 +16,7 @@ public class UsuarioDTO {
     private String DNI;
     private boolean asset = true; // "Activo"
     private Rol rol;
+    private boolean estaEnUnaMateria = false;
     private List<UsuarioMateriaDTO> usuarioMaterias = new ArrayList<>();
 
     public UsuarioDTO(Usuario usuario) {
@@ -26,7 +27,8 @@ public class UsuarioDTO {
         this.DNI= usuario.getDNI();
         this.asset = usuario.isAsset();
         this.rol = usuario.getRol();
-        this.usuarioMaterias = usuario.getUsuarioMaterias().stream().map(usuarioMateria -> new UsuarioMateriaDTO(usuarioMateria)).collect(Collectors.toList());
+        this.estaEnUnaMateria = usuario.isEstaEnUnaMateria();
+        this.usuarioMaterias = usuario.getUsuarioMaterias().stream().filter(usuarioMateria -> usuarioMateria.isAsset()).map(usuarioMateria -> new UsuarioMateriaDTO(usuarioMateria)).collect(Collectors.toList());
     }
 
     public Long getId() {
@@ -59,5 +61,9 @@ public class UsuarioDTO {
 
     public Rol getRol() {
         return rol;
+    }
+
+    public boolean isEstaEnUnaMateria() {
+        return estaEnUnaMateria;
     }
 }

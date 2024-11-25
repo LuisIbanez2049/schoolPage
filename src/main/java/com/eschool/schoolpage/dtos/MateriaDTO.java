@@ -26,7 +26,7 @@ public class MateriaDTO {
         this.descripcion = materia.getDescripcion();
         this.portada = materia.getPortada();
         this.contenidos = materia.getContenidos().stream().map(contenido -> new ContenidoDTO(contenido)).collect(Collectors.toSet());
-        this.alumnos = materia.getUsuarioMaterias().stream().filter(usuarioMateria -> usuarioMateria.getUsuario().getRol().equals(Rol.ESTUDIANTE))
+        this.alumnos = materia.getUsuarioMaterias().stream().filter(usuarioMateria -> usuarioMateria.isAsset()).filter(usuarioMateria -> usuarioMateria.getUsuario().getRol().equals(Rol.ESTUDIANTE))
                 .map(usuarioMateria -> new UsuarioDTO(usuarioMateria.getUsuario())).collect(Collectors.toList());
         this.profesores = materia.getUsuarioMaterias().stream().filter(usuarioMateria -> usuarioMateria.getUsuario().getRol().equals(Rol.PROFESOR))
                 .map(usuarioMateria -> new UsuarioDTO(usuarioMateria.getUsuario())).collect(Collectors.toList());

@@ -6,10 +6,12 @@ import com.eschool.schoolpage.models.UsuarioMateria;
 public class UsuarioMateriaDTO {
     private JornadaTurno jornadaTurno;
     private String nombreMateria;
+    private Long id;
 
     public UsuarioMateriaDTO(UsuarioMateria usuarioMateria) {
         this.jornadaTurno = usuarioMateria.getJornadaTurno();
         this.nombreMateria = usuarioMateria.getMateria().getNombre();
+        this.id = usuarioMateria.getId();
     }
 
     public JornadaTurno getJornadaTurno() {
@@ -19,4 +21,9 @@ public class UsuarioMateriaDTO {
     public String getNombreMateria() {
         return nombreMateria;
     }
+
+    public Long getId() {
+        return id;
+    }
+
 }

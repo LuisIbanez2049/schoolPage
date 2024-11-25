@@ -20,6 +20,7 @@ public class Usuario {
     private String password;
     private boolean asset = true; // "Activo"
     private Rol rol;
+    private boolean estaEnUnaMateria = false;
 
     @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
     private List<UsuarioMateria> usuarioMaterias = new ArrayList<>();
@@ -108,6 +109,14 @@ public class Usuario {
 
     public void setRol(Rol rol) {
         this.rol = rol;
+    }
+
+    public boolean isEstaEnUnaMateria() {
+        return estaEnUnaMateria;
+    }
+
+    public void setEstaEnUnaMateria(boolean estaEnUnaMateria) {
+        this.estaEnUnaMateria = estaEnUnaMateria;
     }
     //--------------------------------------------------------------------------------------
 

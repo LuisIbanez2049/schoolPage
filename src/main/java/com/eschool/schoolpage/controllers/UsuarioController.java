@@ -37,7 +37,7 @@ public class UsuarioController {
     }
 
 
-    @DeleteMapping("/sacarUsuarioDeMateria")
+    @DeleteMapping("/leaveSubject")
     public ResponseEntity<?> salirDeMateria(@RequestBody RecordSalirDeMateria recordSalirDeMateria){
         Usuario usuario = usuarioRepository.findById(recordSalirDeMateria.idUsuario()).orElse(null);
         Materia materia = materiaRepository.findById(recordSalirDeMateria.idMateria()).orElse(null);

@@ -2,10 +2,12 @@ package com.eschool.schoolpage;
 
 import com.eschool.schoolpage.models.*;
 import com.eschool.schoolpage.repositories.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
 
@@ -16,6 +18,9 @@ public class SchoolpageApplication {
 		SpringApplication.run(SchoolpageApplication.class, args);
 	}
 
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
 	@Bean
 	public CommandLineRunner initData(UsuarioRepository usuarioRepository, MateriaRepository materiaRepository, ContenidoRepository contenidoRepository,
 									  UsuarioMateriaRepository usuarioMateriaRepository, ComentarioRepository comentarioRepository,
@@ -23,8 +28,8 @@ public class SchoolpageApplication {
 		return (args) -> {
 
 			//-------------------------------------USUARIOS-------------------------------------------------
-			Usuario luis = new Usuario("Luis", "Ibañez", "94706338", "luis@gmail.com", "1234", Rol.ESTUDIANTE);
-			Usuario tony = new Usuario("Tony", "Stark", "94706338", "tony@gmail.com", "1234", Rol.ESTUDIANTE);
+			Usuario luis = new Usuario("Luis", "Ibañez", "94706338", "luis@gmail.com", passwordEncoder.encode("1234"), Rol.ESTUDIANTE);
+			Usuario tony = new Usuario("Tony", "Stark", "94706338", "tony@gmail.com", passwordEncoder.encode("1234"), Rol.ESTUDIANTE);
 			usuarioRepository.save(luis);
 			usuarioRepository.save(tony);
 

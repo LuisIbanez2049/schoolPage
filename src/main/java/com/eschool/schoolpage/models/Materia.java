@@ -17,6 +17,7 @@ public class Materia {
     private String nombre;
     private String descripcion;
     private String portada;
+    private boolean isAsset = true;
 
     @OneToMany(mappedBy = "materia", fetch = FetchType.EAGER)
     Set<Contenido> contenidos = new HashSet<>();
@@ -80,6 +81,14 @@ public class Materia {
 
     public void setUsuarioMaterias(List<UsuarioMateria> usuarioMaterias) {
         this.usuarioMaterias = usuarioMaterias;
+    }
+
+    public boolean isAsset() {
+        return isAsset;
+    }
+
+    public void setAsset(boolean asset) {
+        isAsset = asset;
     }
     //--------------------------------------------------------------------------------------
 

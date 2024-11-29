@@ -1,8 +1,10 @@
 package com.eschool.schoolpage.controllers;
 
 import com.eschool.schoolpage.dtos.MateriaDTO;
+import com.eschool.schoolpage.dtos.RecordLoginMateria;
 import com.eschool.schoolpage.dtos.RecordSalirDeMateria;
 import com.eschool.schoolpage.dtos.UsuarioDTO;
+import com.eschool.schoolpage.models.JornadaTurno;
 import com.eschool.schoolpage.models.Materia;
 import com.eschool.schoolpage.models.Usuario;
 import com.eschool.schoolpage.models.UsuarioMateria;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.rsocket.context.RSocketPortInfoApplicationContextInitializer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -59,4 +62,45 @@ public class UsuarioController {
         usuarioRepository.save(usuario);
         return new ResponseEntity<>("Usuario: " + usuario.getName() + " " + usuario.getLastName() + " salio de la materia " + materia.getNombre(), HttpStatus.OK);
     }
+
+    @PostMapping("/loginMateria")
+    public ResponseEntity<?> entrarEnMateria(Authentication authentication, @RequestBody RecordLoginMateria recordLoginMateria){
+        try {
+            Usuario usuario = usuarioRepository.findByMail(authentication.getName());
+            Materia materia = materiaRepository.findById(recordLoginMateria.idMateria()).orElse(null);
+            if (materia == null) {
+                return new ResponseEntity<>("Materia no encontrda", HttpStatus.NOT_FOUND);
+            }
+            if (usuario == null) {
+                return new ResponseEntity<>("Usuario no encontrda", HttpStatus.NOT_FOUND);
+            }
+            UsuarioMateria usuarioMateriaa = materia.getUsuarioMaterias().stream().filter(usuarioMateria -> usuarioMateria.getUsuario().getId().equals(usuario.getId())).findFirst().orElse(null);
+            JornadaTurno jornadaTurno = JornadaTurno.MORNIG;
+            if (recordLoginMateria.turno().equalsIgnoreCase("EVENING")) {
+                jornadaTurno = JornadaTurno.EVENING;
+            }
+            if (recordLoginMateria.turno().equalsIgnoreCase("NIGHT")) {
+                jornadaTurno = JornadaTurno.NIGHT;
+            }
+            if (usuarioMateriaa != null && usuarioMateriaa.isAsset()) {
+                return new ResponseEntity<>("YA ESTAS DENTRO DE LA MATERIA " + materia.getNombre(), HttpStatus.OK);
+            }
+            if (usuarioMateriaa != null && !usuarioMateriaa.isAsset()) {
+                usuarioMateriaa.setAsset(true);
+                usuarioMateriaa.setJornadaTurno(jornadaTurno);
+                usuarioMateriaRepository.save(usuarioMateriaa);
+                return new ResponseEntity<>("TE UNISTE A LA MATERIA " + materia.getNombre() + " EXITOSAMENTE", HttpStatus.OK);
+            }
+
+            UsuarioMateria newUsuarioMateria = new UsuarioMateria(jornadaTurno);
+            usuario.addUsuarioMateria(newUsuarioMateria);
+            materia.addUsuarioMateria(newUsuarioMateria);
+            usuarioMateriaRepository.save(newUsuarioMateria);
+
+            return new ResponseEntity<>("TE UNISTE A LA MATERIA " + materia.getNombre() + " EXITOSAMENTE", HttpStatus.OK);
+
+
+        } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
+    }
+
 }

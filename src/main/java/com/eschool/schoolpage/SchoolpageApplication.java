@@ -34,8 +34,11 @@ public class SchoolpageApplication {
 			usuarioRepository.save(tony);
 
 
-			Usuario antonio = new Usuario("Antonio", "Rigan", "94706338", "antoniorigan@gmail.com", "1234", Rol.PROFESOR);
+			Usuario antonio = new Usuario("Antonio", "Rigan", "94706338", "antoniorigan@gmail.com", passwordEncoder.encode("1234"), Rol.PROFESOR);
 			usuarioRepository.save(antonio);
+
+			Usuario admin = new Usuario("admin", "admin", "94706332", "admin@gmail.com", passwordEncoder.encode("1234"), Rol.ADMIN);
+			usuarioRepository.save(admin);
 			//--------------------------------------------------------------------------------------
 
 			//-------------------------------------Materias-------------------------------------------------

@@ -1,7 +1,9 @@
 package com.eschool.schoolpage.controllers;
 
+import com.eschool.schoolpage.dtos.ComentarioDTO;
 import com.eschool.schoolpage.dtos.RecordLogin;
 import com.eschool.schoolpage.dtos.RecordRegister;
+import com.eschool.schoolpage.dtos.UsuarioDTO;
 import com.eschool.schoolpage.models.Rol;
 import com.eschool.schoolpage.models.Usuario;
 import com.eschool.schoolpage.repositories.UsuarioRepository;
@@ -11,14 +13,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.encrypt.RsaAlgorithm;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -106,4 +106,13 @@ public class AuthController {
         return new ResponseEntity<>("CLIENT REGISTERED SUCCESSFULLY", HttpStatus.OK);
 
     }
+
+    @GetMapping("/current")
+    public ResponseEntity<?> getAuthenticatedClient(Authentication authentication){
+        try {
+            Usuario usuario = usuarioRepository.findByMail(authentication.getName());
+            return new ResponseEntity<>(new UsuarioDTO(usuario), HttpStatus.OK);
+        } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
+    }
+
 }

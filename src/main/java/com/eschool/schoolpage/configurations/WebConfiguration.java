@@ -47,7 +47,8 @@ public class WebConfiguration {
                                 authorize
                                         .requestMatchers("/").hasRole("ALUMNO")
                                         .requestMatchers("/").hasRole("PROFESOR")
-                                        .requestMatchers("/h2-console/**").hasRole("ADMIN")
+                                        //.requestMatchers("/h2-console/**").hasRole("ADMIN")
+                                        .requestMatchers("/h2-console/**").permitAll()
                                         // Permite el acceso sin autenticación a las rutas especificadas (login, registro, y consola H2).
                                         .requestMatchers("/api/auth/login", "/api/auth/register").permitAll()
                                         // Permite el acceso sin autenticación a cualquier otra solicitud (esto puede ser modificado según los requisitos).

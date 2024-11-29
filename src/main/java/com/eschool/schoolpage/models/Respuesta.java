@@ -18,6 +18,10 @@ public class Respuesta {
     @JoinColumn(name = "comentario_id")
     private Comentario comentario;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
+
 
     //----------------------------Métodos Constructor------------------------------------
     public Respuesta() { }
@@ -65,6 +69,14 @@ public class Respuesta {
 
     public void setAsset(boolean asset) {
         isAsset = asset;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
     //--------------------------------------------------------------------------------------
 

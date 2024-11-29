@@ -15,11 +15,15 @@ public class ComentarioDTO {
     private String texto;
     private LocalDateTime fecha;
     Set<RespuestaDTO> respuestas = new HashSet<>();
+    private String nombreUsuario;
+    private String nombreContenido;
 
     public ComentarioDTO(Comentario comentario) {
         this.id = comentario.getId();
         this.texto = comentario.getTexto();
         this.fecha = comentario.getFecha();
+        this.nombreContenido = comentario.getContenido().getTitulo();
+        this.nombreUsuario = comentario.getUsuario().getName() + " " + comentario.getUsuario().getLastName();
         this.respuestas = comentario.getRespuestas().stream().filter(respuesta -> respuesta.isAsset()).map(respuesta -> new RespuestaDTO(respuesta)).collect(Collectors.toSet());
     }
 
@@ -55,5 +59,13 @@ public class ComentarioDTO {
 
     public Set<RespuestaDTO> getRespuestas() {
         return respuestas;
+    }
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public String getNombreContenido() {
+        return nombreContenido;
     }
 }

@@ -18,6 +18,8 @@ public class UsuarioDTO {
     private Rol rol;
     private boolean estaEnUnaMateria = false;
     private List<UsuarioMateriaDTO> usuarioMaterias = new ArrayList<>();
+    private List<ComentarioDTO> comentarioDTOS = new ArrayList<>();
+    private List<RespuestaDTO> respuestaDTOS = new ArrayList<>();
 
     public UsuarioDTO(Usuario usuario) {
         this.id = usuario.getId();
@@ -28,7 +30,12 @@ public class UsuarioDTO {
         this.asset = usuario.isAsset();
         this.rol = usuario.getRol();
         this.estaEnUnaMateria = usuario.isEstaEnUnaMateria();
-        this.usuarioMaterias = usuario.getUsuarioMaterias().stream().filter(usuarioMateria -> usuarioMateria.isAsset()).map(usuarioMateria -> new UsuarioMateriaDTO(usuarioMateria)).collect(Collectors.toList());
+        this.usuarioMaterias = usuario.getUsuarioMaterias().stream().filter(usuarioMateria -> usuarioMateria.isAsset())
+                .map(usuarioMateria -> new UsuarioMateriaDTO(usuarioMateria)).collect(Collectors.toList());
+        this.comentarioDTOS = usuario.getComentarios().stream().filter(comentario -> comentario.isAsset())
+                .map(comentario -> new ComentarioDTO(comentario)).collect(Collectors.toList());
+        this.respuestaDTOS = usuario.getRespuestas().stream().filter(respuesta -> respuesta.isAsset())
+                .map(respuesta -> new RespuestaDTO(respuesta)).collect(Collectors.toList());
     }
 
     public Long getId() {
@@ -65,5 +72,13 @@ public class UsuarioDTO {
 
     public boolean isEstaEnUnaMateria() {
         return estaEnUnaMateria;
+    }
+
+    public List<ComentarioDTO> getComentarioDTOS() {
+        return comentarioDTOS;
+    }
+
+    public List<RespuestaDTO> getRespuestaDTOS() {
+        return respuestaDTOS;
     }
 }

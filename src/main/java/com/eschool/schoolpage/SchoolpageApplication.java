@@ -71,23 +71,35 @@ public class SchoolpageApplication {
 			Comentario comentario1MatematicaContenido1 = new Comentario("No me quedo claro el calculo de los parabolas...", LocalDateTime.now());
 			contenido1Matematica.addComentario(comentario1MatematicaContenido1);
 			comentario1MatematicaContenido1.setContenido(contenido1Matematica);
+			luis.addComentario(comentario1MatematicaContenido1);
+			comentario1MatematicaContenido1.setUsuario(luis);
+			usuarioRepository.save(luis);
 			comentarioRepository.save(comentario1MatematicaContenido1);
 
 
 			Comentario comentario1MatematicaContenido2 = new Comentario("No me quedo claro el calculo de los polinomios...", LocalDateTime.now());
 			contenido2Matematica.addComentario(comentario1MatematicaContenido2);
 			comentario1MatematicaContenido2.setContenido(contenido2Matematica);
+			luis.addComentario(comentario1MatematicaContenido2);
+			comentario1MatematicaContenido2.setUsuario(luis);
+			usuarioRepository.save(luis);
 			comentarioRepository.save(comentario1MatematicaContenido2);
 
 
 			Comentario comentario1QuimicaContenido1 = new Comentario("No me quedo claro el tema de los gases...", LocalDateTime.now());
 			contenido1Quimica.addComentario(comentario1QuimicaContenido1);
 			comentario1QuimicaContenido1.setContenido(contenido1Quimica);
+			luis.addComentario(comentario1QuimicaContenido1);
+			comentario1QuimicaContenido1.setUsuario(luis);
+			usuarioRepository.save(luis);
 			comentarioRepository.save(comentario1QuimicaContenido1);
 
 			Comentario comentario1QuimicaContenido2 = new Comentario("No me quedo claro el tema de los ESTADOS...", LocalDateTime.now());
 			contenido2Quimica.addComentario(comentario1QuimicaContenido2);
 			comentario1QuimicaContenido2.setContenido(contenido2Quimica);
+			tony.addComentario(comentario1QuimicaContenido2);
+			comentario1QuimicaContenido2.setUsuario(tony);
+			usuarioRepository.save(tony);
 			comentarioRepository.save(comentario1QuimicaContenido2);
 			//--------------------------------------------------------------------------------------
 
@@ -96,12 +108,18 @@ public class SchoolpageApplication {
 			Respuesta respuesta1Comentario1QuimicaContenido1 = new Respuesta("Te explico, cuando tienes...", LocalDateTime.now());
 			comentario1QuimicaContenido1.addRespuesta(respuesta1Comentario1QuimicaContenido1);
 			respuesta1Comentario1QuimicaContenido1.setComentario(comentario1QuimicaContenido1);
+			antonio.addRespuesta(respuesta1Comentario1QuimicaContenido1);
+			respuesta1Comentario1QuimicaContenido1.setUsuario(antonio);
+			usuarioRepository.save(antonio);
 			respuestaRepository.save(respuesta1Comentario1QuimicaContenido1);
 
 
 			Respuesta respuesta1Comentario1MatematicaContenido2 = new Respuesta("Para llegar a la respuesta debes...", LocalDateTime.now());
 			comentario1MatematicaContenido2.addRespuesta(respuesta1Comentario1MatematicaContenido2);
 			respuesta1Comentario1MatematicaContenido2.setComentario(comentario1MatematicaContenido2);
+			tony.addRespuesta(respuesta1Comentario1MatematicaContenido2);
+			respuesta1Comentario1MatematicaContenido2.setUsuario(antonio);
+			usuarioRepository.save(antonio);
 			respuestaRepository.save(respuesta1Comentario1MatematicaContenido2);
 			//--------------------------------------------------------------------------------------
 

@@ -10,11 +10,13 @@ public class RespuestaDTO {
 
     private String texto;
     private LocalDateTime fecha;
+    private String nombreUsuario;
 
     public RespuestaDTO(Respuesta respuesta) {
         this.id = respuesta.getId();
         this.texto = respuesta.getTexto();
         this.fecha = respuesta.getFecha();
+        this.nombreUsuario = respuesta.getUsuario().getName() + " " + respuesta.getUsuario().getLastName();
     }
 
 
@@ -30,4 +32,7 @@ public class RespuestaDTO {
         return fecha;
     }
 
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
 }

@@ -25,6 +25,12 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
     private List<UsuarioMateria> usuarioMaterias = new ArrayList<>();
 
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
+    private List<Comentario> comentarios = new ArrayList<>();
+
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
+    private List<Respuesta> respuestas = new ArrayList<>();
+
 
     //----------------------------Métodos Constructor------------------------------------
     public Usuario() { }
@@ -118,11 +124,35 @@ public class Usuario {
     public void setEstaEnUnaMateria(boolean estaEnUnaMateria) {
         this.estaEnUnaMateria = estaEnUnaMateria;
     }
+
+    public List<Comentario> getComentarios() {
+        return comentarios;
+    }
+
+    public void setComentarios(List<Comentario> comentarios) {
+        this.comentarios = comentarios;
+    }
+
+    public List<Respuesta> getRespuestas() {
+        return respuestas;
+    }
+
+    public void setRespuestas(List<Respuesta> respuestas) {
+        this.respuestas = respuestas;
+    }
     //--------------------------------------------------------------------------------------
 
     public void addUsuarioMateria(UsuarioMateria usuarioMateria){
         this.usuarioMaterias.add(usuarioMateria);
         usuarioMateria.setUsuario(this);
+    }
+    public void addComentario(Comentario comentario){
+        this.comentarios.add((comentario));
+        comentario.setUsuario(this);
+    }
+    public void addRespuesta(Respuesta respuesta){
+        this.respuestas.add(respuesta);
+
     }
 
 

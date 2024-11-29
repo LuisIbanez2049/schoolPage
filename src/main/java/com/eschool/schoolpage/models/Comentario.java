@@ -21,9 +21,15 @@ public class Comentario {
     @JoinColumn(name = "contenido_id")
     private Contenido contenido;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
+
 
     @OneToMany(mappedBy = "comentario",fetch = FetchType.EAGER)
     Set<Respuesta> respuestas = new HashSet<>();
+
+
 
     //----------------------------Métodos Constructor------------------------------------
     public Comentario() { }
@@ -78,6 +84,14 @@ public class Comentario {
 
     public void setAsset(boolean asset) {
         isAsset = asset;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
     //--------------------------------------------------------------------------------------
 

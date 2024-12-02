@@ -17,6 +17,7 @@ public class Contenido {
     private LocalDateTime fechaDePublicacion;
     private String detalleDelContenido;
     private String archivo;
+    private boolean isAsset = true;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "materia_id")
@@ -88,6 +89,14 @@ public class Contenido {
 
     public void setComentarios(Set<Comentario> comentarios) {
         this.comentarios = comentarios;
+    }
+
+    public boolean isAsset() {
+        return isAsset;
+    }
+
+    public void setAsset(boolean asset) {
+        isAsset = asset;
     }
     //--------------------------------------------------------------------------------------
 

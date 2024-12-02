@@ -112,9 +112,17 @@ public class MateriaController {
     @PatchMapping("/activar/{id}")
     public ResponseEntity<?> activarMateria(Authentication authentication,@PathVariable Long id ){
         try {
+            Usuario usuario = usuarioRepository.findByMail(authentication.getName());
+
             Materia materia = materiaRepository.findById(id).orElse(null);
             if (materia == null) {
                 return new ResponseEntity<>("Materia no encontrada", HttpStatus.NOT_FOUND);
+            }
+            if (usuario == null) {
+                return new ResponseEntity<>("Usuario no encontrado", HttpStatus.NOT_FOUND);
+            }
+            if (usuario.getRol().equals(Rol.ESTUDIANTE)) {
+                return new ResponseEntity<>("NO TIENES PERMISO PARA REALIZAR ESTA ACCION", HttpStatus.FORBIDDEN);
             }
             if (materia.isAsset()) {
                 return new ResponseEntity<>("La materia " + materia.getNombre() + " esta activa actualmente", HttpStatus.NOT_FOUND);

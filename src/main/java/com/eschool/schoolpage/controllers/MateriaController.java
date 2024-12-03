@@ -27,7 +27,7 @@ public class MateriaController {
     private UsuarioRepository usuarioRepository;
 
     @GetMapping("/")
-    public ResponseEntity<?> getAllMaterias(){
+    public ResponseEntity<?> getAllMaterias(Authentication authentication){
         List<MateriaDTO> materiaDTOS = materiaRepository.findAll().stream().filter(materia -> materia.isAsset())
                 .map(materia -> new MateriaDTO(materia)).collect(Collectors.toList());
         return new ResponseEntity<>(materiaDTOS, HttpStatus.OK);
@@ -64,9 +64,6 @@ public class MateriaController {
         try {
             Usuario usuario = usuarioRepository.findByMail(authentication.getName());
             Materia materia = materiaRepository.findById(recordModificarMateria.idMateria()).orElse(null);
-            if (usuario.getRol() != Rol.ADMIN) {
-                return new ResponseEntity<>("No tienes permisos para realizar esta accion", HttpStatus.FORBIDDEN);
-            }
             if (usuario == null) {
                 return new ResponseEntity<>("Usuario no encontrado", HttpStatus.NOT_FOUND);
             }

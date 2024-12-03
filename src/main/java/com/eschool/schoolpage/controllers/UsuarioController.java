@@ -33,15 +33,26 @@ public class UsuarioController {
     private UsuarioMateriaRepository usuarioMateriaRepository;
 
     @GetMapping("/")
-    public ResponseEntity<?> getallUsuariosActivos(){
+    public ResponseEntity<?> getallUsuariosActivos(Authentication authentication){
         List<UsuarioDTO> usuarioDTOS = usuarioRepository.findAll().stream().filter(usuario -> usuario.isAsset())
                 .map(cadaUsuario -> new UsuarioDTO(cadaUsuario)).collect(Collectors.toList());
         return new ResponseEntity<>(usuarioDTOS, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findUsuario(Authentication authentication, @PathVariable Long id){
+        try {
+            Usuario usuario = usuarioRepository.findById(id).orElse(null);
+            if (usuario == null) {
+                return new ResponseEntity<>("Usuario no encontrado.", HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(new UsuarioDTO(usuario), HttpStatus.OK);
+        }  catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
+    }
+
 
     @DeleteMapping("/leaveSubject")
-    public ResponseEntity<?> salirDeMateria(@RequestBody RecordSalirDeMateria recordSalirDeMateria){
+    public ResponseEntity<?> salirDeMateria(Authentication authentication, @RequestBody RecordSalirDeMateria recordSalirDeMateria){
         Usuario usuario = usuarioRepository.findById(recordSalirDeMateria.idUsuario()).orElse(null);
         Materia materia = materiaRepository.findById(recordSalirDeMateria.idMateria()).orElse(null);
         if (materia == null) {
@@ -50,11 +61,16 @@ public class UsuarioController {
         if (usuario == null) {
             return new ResponseEntity<>("usuario no encontrado", HttpStatus.NOT_FOUND);
         }
-        UsuarioMateria usuarioMateriaFiltrado = usuario.getUsuarioMaterias().stream().filter(usuarioMateria -> usuarioMateria.getMateria().getNombre().equals(materia.getNombre())).findFirst().orElse(null);
-//        UsuarioMateria usuarioMateria = usuarioMateriaRepository.findById(usuarioMateriaFiltrado.getId()).orElse(null);
+
+        UsuarioMateria usuarioMateriaFiltrado = usuario.getUsuarioMaterias().stream().filter(usuarioMateria -> usuarioMateria.getMateria().getNombre().equals(materia.getNombre()))
+                .findFirst().orElse(null);
         if (usuarioMateriaFiltrado == null) {
             return new ResponseEntity<>("usuario materia no encontrado", HttpStatus.NOT_FOUND);
         }
+        if (!usuarioMateriaFiltrado.isAsset()) {
+            return new ResponseEntity<>("No perteneces a esta materia", HttpStatus.NOT_FOUND);
+        }
+
         else { usuarioMateriaFiltrado.setAsset(false); }
         usuarioMateriaRepository.save(usuarioMateriaFiltrado);
 

@@ -79,7 +79,7 @@ public class ComentarioController {
             Comentario comentarioUsuario = usuario.getComentarios().stream().filter(comentario1 -> comentario1.getId().equals(comentario.getId()))
                     .findFirst().orElse(null);
             if (comentarioUsuario == null) {
-                return new ResponseEntity<>("Este comentario no te pretenece", HttpStatus.FORBIDDEN);
+                return new ResponseEntity<>("Este comentario no te pertenece", HttpStatus.FORBIDDEN);
             }
             if (recordModificarComentario.texto().isBlank()) {
                 return new ResponseEntity<>("Campo vacio.", HttpStatus.NOT_FOUND);

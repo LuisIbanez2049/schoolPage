@@ -42,6 +42,17 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login (@RequestBody RecordLogin recordLogin){
         try {
+
+            if (recordLogin.email().isBlank()) {
+                return new ResponseEntity<>("Please provide an email.", HttpStatus.BAD_REQUEST);
+            }
+            Usuario usuario = usuarioRepository.findByMail(recordLogin.email());
+            if (usuario == null) {
+                return new ResponseEntity<>("Email not registered.", HttpStatus.BAD_REQUEST);
+            }
+            if (recordLogin.password().isBlank()) {
+                return new ResponseEntity<>("Please enter the password.", HttpStatus.BAD_REQUEST);
+            }
             System.out.println("Login attempt for: " + recordLogin.email());
 
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(recordLogin.email(), recordLogin.password()));
@@ -55,7 +66,7 @@ public class AuthController {
             return ResponseEntity.ok(jwt);
         } catch (Exception e){
             e.printStackTrace();
-            return new ResponseEntity<>("Email or password invalid.", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Invalid password.", HttpStatus.BAD_REQUEST);
         }
     }
 

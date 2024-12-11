@@ -42,8 +42,8 @@ public class SchoolpageApplication {
 			//--------------------------------------------------------------------------------------
 
 			//-------------------------------------Materias-------------------------------------------------
-			Materia matematica = new Materia("Matematica", "Polinomios, Diferenciales, Trigonometria", "https://cdn-blog.superprof.com/blog_co/wp-content/uploads/2020/10/las-matematicas.jpeg" );
-			Materia quimica = new Materia("Quimica", "Gases, Estados, Composicion Atómica", "https://cards.algoreducation.com/_next/image?url=https%3A%2F%2Ffiles.algoreducation.com%2Fproduction-ts%2F__S3__85d3dd80-4e5e-4469-961c-a4b3a1814e27&w=3840&q=75");
+			Materia matematica = new Materia("Matematica", "Estudio del razonamiento lógico y analítico, abordando números, álgebra, geometría y más, para resolver problemas cotidianos y científicos.", "https://cdn-blog.superprof.com/blog_co/wp-content/uploads/2020/10/las-matematicas.jpeg" );
+			Materia quimica = new Materia("Quimica", "Ciencia que estudia la composición, estructura y transformación de la materia, aplicándose en la salud, industria, medio ambiente y tecnología.", "https://cards.algoreducation.com/_next/image?url=https%3A%2F%2Ffiles.algoreducation.com%2Fproduction-ts%2F__S3__85d3dd80-4e5e-4469-961c-a4b3a1814e27&w=3840&q=75");
 			materiaRepository.save(matematica);
 			materiaRepository.save(quimica);
 			//--------------------------------------------------------------------------------------

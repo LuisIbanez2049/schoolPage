@@ -72,18 +72,20 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RecordRegister recordRegister){
-        if (usuarioRepository.findByMail(recordRegister.email()) != null) {
-            return new ResponseEntity<>("Email not available. Already in use.", HttpStatus.BAD_REQUEST);
-        }
-        if (recordRegister.name().length() < 2) { return new ResponseEntity<>("Invalid first name. Please provide at least 2 characters.", HttpStatus.BAD_REQUEST);}
 
         if (recordRegister.name().isBlank()) {
             return new ResponseEntity<>("First name can not be empty.", HttpStatus.BAD_REQUEST);
         }
+        if (recordRegister.name().length() < 2) { return new ResponseEntity<>("Invalid first name. Please provide at least 2 characters.", HttpStatus.BAD_REQUEST);}
+
         if (recordRegister.lastName().isBlank()) {
             return new ResponseEntity<>("Last name can not be empty.", HttpStatus.BAD_REQUEST);
         }
         if (recordRegister.lastName().length() < 2) { return new ResponseEntity<>("Invalid last name. Please provide at least 2 characters.", HttpStatus.BAD_REQUEST);}
+
+        if (recordRegister.dni().isBlank()) {
+            return new ResponseEntity<>("DNI can not be empty.", HttpStatus.BAD_REQUEST);
+        }
 
         if (recordRegister.email().isBlank()) {
             return new ResponseEntity<>("Email can not be empty.", HttpStatus.BAD_REQUEST);
@@ -94,8 +96,8 @@ public class AuthController {
             return new ResponseEntity<>("Invalid email. Please enter a valid domain extension since '.com', '.net', '.org', '.co' or '.info'.", HttpStatus.BAD_REQUEST); }
         if (recordRegister.email().contains("@.")) { return new ResponseEntity<>("Invalid email. Please provide a valid domain since 'gmail', 'yahoo', etc., " +
                 "between the characters '@' and the character '.'", HttpStatus.BAD_REQUEST); }
-        if (recordRegister.dni().isBlank()) {
-            return new ResponseEntity<>("DNI can not be empty.", HttpStatus.BAD_REQUEST);
+        if (usuarioRepository.findByMail(recordRegister.email()) != null) {
+            return new ResponseEntity<>("Email not available. Already in use.", HttpStatus.BAD_REQUEST);
         }
         if (recordRegister.password().isBlank()) {
             return new ResponseEntity<>("Password can not be empty.", HttpStatus.BAD_REQUEST);
@@ -114,7 +116,7 @@ public class AuthController {
         String encodePassword = passwordEncoder.encode(recordRegister.password());
         Usuario newUsuario = new Usuario(recordRegister.name(), recordRegister.lastName(), recordRegister.dni(), recordRegister.email(), encodePassword, rol);
         usuarioRepository.save(newUsuario);
-        return new ResponseEntity<>("CLIENT REGISTERED SUCCESSFULLY", HttpStatus.OK);
+        return new ResponseEntity<>("USER REGISTERED SUCCESSFULLY", HttpStatus.OK);
 
     }
 

@@ -33,6 +33,16 @@ public class MateriaController {
         return new ResponseEntity<>(materiaDTOS, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findMateriaById(Authentication authentication, @PathVariable Long id){
+        try {
+            Materia materia = materiaRepository.findById(id).orElse(null);
+            if (materia == null) {
+                return new ResponseEntity<>("Materia not found", HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(new MateriaDTO(materia), HttpStatus.OK);
+        } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
+    }
     @PostMapping("/create")
     public ResponseEntity<?> crearMateria(Authentication authentication, @RequestBody RecordNewMateria recordNewMateria){
         try {
@@ -52,7 +62,17 @@ public class MateriaController {
             if (recordNewMateria.portada().isBlank()) {
                 return new ResponseEntity<>("La portada debe ser especificada.", HttpStatus.FORBIDDEN);
             }
-            Materia newMateria = new Materia(recordNewMateria.nombre(), recordNewMateria.descripcion(), recordNewMateria.portada());
+            Materia lastMateria = materiaRepository.findTopByOrderByIdDesc();
+            if (lastMateria == null) {
+                return new ResponseEntity<>("Last subject not found", HttpStatus.NOT_FOUND);
+            }
+            String color;
+            if (lastMateria.getColor().equals("#a1d9d9")) {
+                color = "#a2b38b";
+            } else if (lastMateria.getColor().equals("#a2b38b")) {
+                color = "#c8677f";
+            } else { color = "#a1d9d9"; }
+            Materia newMateria = new Materia(recordNewMateria.nombre(), recordNewMateria.descripcion(), recordNewMateria.portada(), color);
             materiaRepository.save(newMateria);
             return new ResponseEntity<>("La materia " + recordNewMateria.nombre() + " fue creada exitosamente.", HttpStatus.OK);
 

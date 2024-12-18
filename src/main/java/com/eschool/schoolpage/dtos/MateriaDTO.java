@@ -16,6 +16,7 @@ public class MateriaDTO {
     private String nombre;
     private String descripcion;
     private String portada;
+    private String color;
     Set<ContenidoDTO> contenidos = new HashSet<>();
     List<UsuarioDTO> alumnos = new ArrayList<>();
     List<UsuarioDTO> profesores = new ArrayList<>();
@@ -25,6 +26,7 @@ public class MateriaDTO {
         this.nombre = materia.getNombre();
         this.descripcion = materia.getDescripcion();
         this.portada = materia.getPortada();
+        this.color = materia.getColor();
         this.contenidos = materia.getContenidos().stream().filter(contenido -> contenido.isAsset())
                 .map(contenido -> new ContenidoDTO(contenido)).collect(Collectors.toSet());
         this.alumnos = materia.getUsuarioMaterias().stream().filter(usuarioMateria -> usuarioMateria.isAsset()).filter(usuarioMateria -> usuarioMateria.getUsuario().getRol().equals(Rol.ESTUDIANTE))
@@ -60,5 +62,9 @@ public class MateriaDTO {
 
     public List<UsuarioDTO> getProfesores() {
         return profesores;
+    }
+
+    public String getColor() {
+        return color;
     }
 }

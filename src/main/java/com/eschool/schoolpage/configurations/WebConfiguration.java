@@ -45,7 +45,7 @@ public class WebConfiguration {
                 // Configura las reglas de autorización para las solicitudes HTTP.
                 .authorizeHttpRequests(authorize ->
                                 authorize
-                                        .requestMatchers("/api/materias/", "/api/usuarios/leaveSubject", "/api/auth/current").hasAnyRole("ALUMNO","PROFESOR", "ADMIN")
+                                        .requestMatchers("/api/materias/", "/api/materias/*", "/api/usuarios/leaveSubject", "/api/auth/current").hasAnyRole("ALUMNO","PROFESOR", "ADMIN")
                                         .requestMatchers("/api/usuarios/loginMateria", "/api/respuesta/create", "/api/respuesta/modificar",
                                                 "/api/auth/current", "/api/comentario/create", "/api/comentario/authenticatedUserDesactivar/**",
                                                 "/api/respuesta/authenticatedUserDesactivar/**").hasAnyRole("ALUMNO", "PROFESOR")

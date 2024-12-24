@@ -113,6 +113,7 @@ public class SchoolpageApplication {
 			respuesta1Comentario1QuimicaContenido1.setComentario(comentario1QuimicaContenido1);
 			antonio.addRespuesta(respuesta1Comentario1QuimicaContenido1);
 			respuesta1Comentario1QuimicaContenido1.setUsuario(antonio);
+			respuesta1Comentario1QuimicaContenido1.setRespuestaPara("Luis Ibañez");
 			usuarioRepository.save(antonio);
 			respuestaRepository.save(respuesta1Comentario1QuimicaContenido1);
 
@@ -121,9 +122,20 @@ public class SchoolpageApplication {
 			comentario1MatematicaContenido2.addRespuesta(respuesta1Comentario1MatematicaContenido2);
 			respuesta1Comentario1MatematicaContenido2.setComentario(comentario1MatematicaContenido2);
 			tony.addRespuesta(respuesta1Comentario1MatematicaContenido2);
-			respuesta1Comentario1MatematicaContenido2.setUsuario(antonio);
-			usuarioRepository.save(antonio);
+			respuesta1Comentario1MatematicaContenido2.setUsuario(tony);
+			respuesta1Comentario1MatematicaContenido2.setRespuestaPara("Luis Ibañez");
+			usuarioRepository.save(tony);
 			respuestaRepository.save(respuesta1Comentario1MatematicaContenido2);
+
+
+			Respuesta respuesta2Comentario1MatematicaContenido2 = new Respuesta("Ahora entiendo, gracias...", LocalDateTime.now());
+			comentario1MatematicaContenido2.addRespuesta(respuesta2Comentario1MatematicaContenido2);
+			respuesta2Comentario1MatematicaContenido2.setComentario(comentario1MatematicaContenido2);
+			luis.addRespuesta(respuesta2Comentario1MatematicaContenido2);
+			respuesta2Comentario1MatematicaContenido2.setUsuario(luis);
+			respuesta2Comentario1MatematicaContenido2.setRespuestaPara("Tony Stark");
+			usuarioRepository.save(luis);
+			respuestaRepository.save(respuesta2Comentario1MatematicaContenido2);
 			//--------------------------------------------------------------------------------------
 
 

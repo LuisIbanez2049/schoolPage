@@ -13,6 +13,7 @@ public class Respuesta {
     private String texto;
     private LocalDateTime fecha;
     private boolean isAsset = true;
+    private String respuestaPara;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "comentario_id")
@@ -77,6 +78,14 @@ public class Respuesta {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public String getRespuestaPara() {
+        return respuestaPara;
+    }
+
+    public void setRespuestaPara(String respuestaPara) {
+        this.respuestaPara = respuestaPara;
     }
     //--------------------------------------------------------------------------------------
 

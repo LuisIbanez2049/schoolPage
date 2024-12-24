@@ -44,9 +44,13 @@ public class RespuestaController {
     public ResponseEntity<?> crearRespuesta(Authentication authentication, @RequestBody RecordRespuesta recordRespuesta){
         try {
             Usuario usuario = usuarioRepository.findByMail(authentication.getName());
+            Usuario usuarioReceptor = usuarioRepository.findById(recordRespuesta.idUsuario()).orElse(null);
             Comentario comentario = comentarioRepository.findById(recordRespuesta.idComentario()).orElse(null);
             if (usuario == null) {
                 return new ResponseEntity<>("Usuario no encontrado", HttpStatus.NOT_FOUND);
+            }
+            if (usuarioReceptor == null) {
+                return new ResponseEntity<>("UsuarioReceptor no encontrado", HttpStatus.NOT_FOUND);
             }
             if (comentario == null) {
                 return new ResponseEntity<>("Comentario no encontrado", HttpStatus.NOT_FOUND);
@@ -60,6 +64,7 @@ public class RespuestaController {
             newRespuesta.setComentario(comentario);
             usuario.addRespuesta(newRespuesta);
             newRespuesta.setUsuario(usuario);
+            newRespuesta.setRespuestaPara(usuarioReceptor.getName() + " " + usuarioReceptor.getLastName());
             respuestaRepository.save(newRespuesta);
             return new ResponseEntity<>("Respuesta agregada", HttpStatus.OK);
         }  catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }

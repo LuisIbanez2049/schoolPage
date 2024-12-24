@@ -11,12 +11,17 @@ public class RespuestaDTO {
     private String texto;
     private LocalDateTime fecha;
     private String nombreUsuario;
+    private String respuestaPara;
+    private Long usuarioId;
 
     public RespuestaDTO(Respuesta respuesta) {
         this.id = respuesta.getId();
         this.texto = respuesta.getTexto();
         this.fecha = respuesta.getFecha();
         this.nombreUsuario = respuesta.getUsuario().getName() + " " + respuesta.getUsuario().getLastName();
+        this.usuarioId = respuesta.getUsuario().getId();
+        //this.respuestaPara  = respuesta.getComentario().getUsuario().getName() + " " + respuesta.getComentario().getUsuario().getLastName();
+        this.respuestaPara  = respuesta.getRespuestaPara();
     }
 
 
@@ -34,5 +39,13 @@ public class RespuestaDTO {
 
     public String getNombreUsuario() {
         return nombreUsuario;
+    }
+
+    public String getRespuestaPara() {
+        return respuestaPara;
+    }
+
+    public Long getUsuarioId() {
+        return usuarioId;
     }
 }

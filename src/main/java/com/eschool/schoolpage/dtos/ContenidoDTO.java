@@ -4,8 +4,10 @@ import com.eschool.schoolpage.models.Comentario;
 import com.eschool.schoolpage.models.Contenido;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 public class ContenidoDTO {
@@ -24,7 +26,7 @@ public class ContenidoDTO {
         this.detalleDelContenido = contenido.getDetalleDelContenido();
         this.fechaDePublicacion = contenido.getFechaDePublicacion();
         this.archivo = contenido.getArchivo();
-        this.comentarios = contenido.getComentarios().stream().filter(comentario -> comentario.isAsset()).map(comentario -> new ComentarioDTO(comentario)).collect(Collectors.toSet());
+        this.comentarios = contenido.getComentarios().stream().filter(comentario -> comentario.isAsset()).map(comentario -> new ComentarioDTO(comentario)).collect(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(ComentarioDTO::getId).reversed())));
     }
 
 

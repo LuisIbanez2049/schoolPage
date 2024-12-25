@@ -4,10 +4,7 @@ import com.eschool.schoolpage.models.Contenido;
 import com.eschool.schoolpage.models.Materia;
 import com.eschool.schoolpage.models.Rol;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class MateriaDTO {
@@ -28,7 +25,7 @@ public class MateriaDTO {
         this.portada = materia.getPortada();
         this.color = materia.getColor();
         this.contenidos = materia.getContenidos().stream().filter(contenido -> contenido.isAsset())
-                .map(contenido -> new ContenidoDTO(contenido)).collect(Collectors.toSet());
+                .map(contenido -> new ContenidoDTO(contenido)).collect(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(ContenidoDTO::getId).reversed())));
         this.alumnos = materia.getUsuarioMaterias().stream().filter(usuarioMateria -> usuarioMateria.isAsset()).filter(usuarioMateria -> usuarioMateria.getUsuario().getRol().equals(Rol.ESTUDIANTE))
                 .map(usuarioMateria -> new UsuarioDTO(usuarioMateria.getUsuario())).collect(Collectors.toList());
         this.profesores = materia.getUsuarioMaterias().stream().filter(usuarioMateria -> usuarioMateria.isAsset()).filter(usuarioMateria -> usuarioMateria.getUsuario().getRol().equals(Rol.PROFESOR))

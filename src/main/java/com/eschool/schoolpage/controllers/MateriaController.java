@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,7 +30,7 @@ public class MateriaController {
     @GetMapping("/")
     public ResponseEntity<?> getAllMaterias(Authentication authentication){
         List<MateriaDTO> materiaDTOS = materiaRepository.findAll().stream().filter(materia -> materia.isAsset())
-                .map(materia -> new MateriaDTO(materia)).collect(Collectors.toList());
+                .map(materia -> new MateriaDTO(materia)).collect(Collectors.toList()).stream().sorted(Comparator.comparing(MateriaDTO::getId).reversed()).collect(Collectors.toList());
         return new ResponseEntity<>(materiaDTOS, HttpStatus.OK);
     }
 

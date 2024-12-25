@@ -5,8 +5,10 @@ import com.eschool.schoolpage.models.Contenido;
 import com.eschool.schoolpage.models.Respuesta;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 public class ComentarioDTO {
@@ -17,6 +19,7 @@ public class ComentarioDTO {
     Set<RespuestaDTO> respuestas = new HashSet<>();
     private String nombreUsuario;
     private String nombreContenido;
+    private Long userId;
 
     public ComentarioDTO(Comentario comentario) {
         this.id = comentario.getId();
@@ -24,7 +27,9 @@ public class ComentarioDTO {
         this.fecha = comentario.getFecha();
         this.nombreContenido = comentario.getContenido().getTitulo();
         this.nombreUsuario = comentario.getUsuario().getName() + " " + comentario.getUsuario().getLastName();
-        this.respuestas = comentario.getRespuestas().stream().filter(respuesta -> respuesta.isAsset()).map(respuesta -> new RespuestaDTO(respuesta)).collect(Collectors.toSet());
+        this.userId = comentario.getUsuario().getId();
+        this.respuestas = comentario.getRespuestas().stream().filter(respuesta -> respuesta.isAsset()).map(respuesta -> new RespuestaDTO(respuesta))
+                .collect(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(RespuestaDTO::getId))));
     }
 
 
@@ -67,5 +72,9 @@ public class ComentarioDTO {
 
     public String getNombreContenido() {
         return nombreContenido;
+    }
+
+    public Long getUserId() {
+        return userId;
     }
 }

@@ -63,7 +63,8 @@ public class MateriaController {
             return new ResponseEntity<>("Usuario no encontrado", HttpStatus.NOT_FOUND);
         }
         UsuarioDTO usuarioDTO = new UsuarioDTO(usuario);
-        List<MateriaDTO> materiaDTOS = usuario.getUsuarioMaterias().stream().filter(usuarioMateria -> usuarioMateria.isAsset()).map(usuarioMateria -> new MateriaDTO(usuarioMateria.getMateria())).collect(Collectors.toList());
+        List<MateriaDTO> materiaDTOS = usuario.getUsuarioMaterias().stream().filter(usuarioMateria -> usuarioMateria.isAsset()).map(usuarioMateria -> new MateriaDTO(usuarioMateria.getMateria())).collect(Collectors.toList())
+                .stream().sorted(Comparator.comparing(MateriaDTO::getId).reversed()).collect(Collectors.toList());
         if (materiaDTOS.isEmpty() || materiaDTOS == null) {
             return new ResponseEntity<>("No hay meterias", HttpStatus.NOT_FOUND);
         }
@@ -110,7 +111,10 @@ public class MateriaController {
             } else if (lastMateria.getColor().equals("#a2b38b")) {
                 color = "#c8677f";
             } else { color = "#a1d9d9"; }
-            Materia newMateria = new Materia(recordNewMateria.nombre(), recordNewMateria.descripcion(), recordNewMateria.portada(), color);
+            if (recordNewMateria.accessCode().isBlank()) {
+                return new ResponseEntity<>("El codigo de acceso debe ser especificado.", HttpStatus.FORBIDDEN);
+            }
+            Materia newMateria = new Materia(recordNewMateria.nombre(), recordNewMateria.descripcion(), recordNewMateria.portada(), color, recordNewMateria.accessCode());
             materiaRepository.save(newMateria);
             return new ResponseEntity<>("La materia " + recordNewMateria.nombre() + " fue creada exitosamente.", HttpStatus.OK);
 

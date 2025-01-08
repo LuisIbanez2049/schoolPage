@@ -19,6 +19,7 @@ public class Materia {
     private String portada;
     private boolean isAsset = true;
     private String color;
+    private String accessCode;
 
     @OneToMany(mappedBy = "materia", fetch = FetchType.EAGER)
     Set<Contenido> contenidos = new HashSet<>();
@@ -30,11 +31,12 @@ public class Materia {
     //----------------------------Métodos Constructor------------------------------------
     public Materia() { }
 
-    public Materia(String nombre, String descripcion, String portada, String color) {
+    public Materia(String nombre, String descripcion, String portada, String color, String accessCode) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.portada = portada;
         this.color = color;
+        this.accessCode = accessCode;
     }
     //--------------------------------------------------------------------------------------
 
@@ -99,6 +101,14 @@ public class Materia {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public String getAccessCode() {
+        return accessCode;
+    }
+
+    public void setAccessCode(String accessCode) {
+        this.accessCode = accessCode;
     }
     //--------------------------------------------------------------------------------------
 

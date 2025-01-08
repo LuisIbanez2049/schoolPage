@@ -90,6 +90,9 @@ public class UsuarioController {
             if (usuario == null) {
                 return new ResponseEntity<>("Usuario no encontrda", HttpStatus.NOT_FOUND);
             }
+            if (!materia.getAccessCode().equals(recordLoginMateria.accessCode())) {
+                return new ResponseEntity<>("Invalid access code.", HttpStatus.NOT_FOUND);
+            }
             UsuarioMateria usuarioMateriaa = materia.getUsuarioMaterias().stream().filter(usuarioMateria -> usuarioMateria.getUsuario().getId().equals(usuario.getId())).findFirst().orElse(null);
             JornadaTurno jornadaTurno = JornadaTurno.MORNIG;
             if (recordLoginMateria.turno().equalsIgnoreCase("EVENING")) {
@@ -100,6 +103,9 @@ public class UsuarioController {
             }
             if (usuarioMateriaa != null && usuarioMateriaa.isAsset()) {
                 return new ResponseEntity<>("YA ESTAS DENTRO DE LA MATERIA " + materia.getNombre(), HttpStatus.OK);
+            }
+            if (recordLoginMateria.turno().isEmpty() || recordLoginMateria.turno().isBlank()) {
+                return new ResponseEntity<>("Please specify a shift.", HttpStatus.NOT_FOUND);
             }
             if (usuarioMateriaa != null && !usuarioMateriaa.isAsset()) {
                 usuarioMateriaa.setAsset(true);

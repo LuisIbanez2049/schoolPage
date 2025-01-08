@@ -46,6 +46,17 @@ public class ContenidoController {
         } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getContenidoById(Authentication authentication, @PathVariable Long id){
+        try {
+            Contenido contenido = contenidoRepository.findById(id).orElse(null);
+            if (contenido == null) {
+                return new ResponseEntity<>("Contenido con id: " + id + " no encontrado", HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(new ContenidoDTO(contenido), HttpStatus.OK);
+        } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
+    }
+
     @PostMapping("/create")
     public ResponseEntity<?> crearContenido(Authentication authentication,@RequestBody RecordCrearContenido recordCrearContenido){
         try {

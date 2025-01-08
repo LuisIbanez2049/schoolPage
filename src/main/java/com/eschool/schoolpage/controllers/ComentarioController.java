@@ -40,6 +40,17 @@ public class ComentarioController {
         } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getComentarioById(Authentication authentication, @PathVariable Long id){
+        try {
+            Comentario comentario = comentarioRepository.findById(id).orElse(null);
+            if (comentario == null) {
+                return new ResponseEntity<>("Comentario con id: " + id + " no encontrado", HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(new ComentarioDTO(comentario), HttpStatus.OK);
+        } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
+    }
+
     @PostMapping("/create")
     public ResponseEntity<?> crearComentario(Authentication authentication, @RequestBody RecordComentario recordComentario){
         try {

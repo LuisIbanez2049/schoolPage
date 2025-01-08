@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -37,6 +38,18 @@ public class RespuestaController {
             List<RespuestaDTO> respuestaDTOS = respuestaRepository.findAll().stream().filter(respuesta -> respuesta.isAsset())
                     .map(respuesta -> new RespuestaDTO(respuesta)).collect(Collectors.toList());
             return new ResponseEntity<>(respuestaDTOS, HttpStatus.OK);
+        } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
+    }
+
+    @GetMapping("/fromAcomment/{id}")
+    public ResponseEntity<?> getAllRespuestasFromAcomment(Authentication authentication, @PathVariable Long id){
+        try {
+            Comentario comentario = comentarioRepository.findById(id).orElse(null);
+            if (comentario == null) {
+                return new ResponseEntity<>("Comentario con id: " + id + " no encontrado.", HttpStatus.NOT_FOUND);
+            }
+            ComentarioDTO comentarioDTO = new ComentarioDTO(comentario);
+            return new ResponseEntity<>(comentarioDTO.getRespuestas(), HttpStatus.OK);
         } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
     }
 

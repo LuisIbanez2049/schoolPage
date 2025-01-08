@@ -25,5 +25,4 @@ public class UsuarioMateriaDTO {
     public Long getId() {
         return id;
     }
-
 }

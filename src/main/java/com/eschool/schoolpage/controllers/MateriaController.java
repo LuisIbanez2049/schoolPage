@@ -3,10 +3,13 @@ package com.eschool.schoolpage.controllers;
 import com.eschool.schoolpage.dtos.MateriaDTO;
 import com.eschool.schoolpage.dtos.RecordModificarMateria;
 import com.eschool.schoolpage.dtos.RecordNewMateria;
+import com.eschool.schoolpage.dtos.UsuarioDTO;
 import com.eschool.schoolpage.models.Materia;
 import com.eschool.schoolpage.models.Rol;
 import com.eschool.schoolpage.models.Usuario;
+import com.eschool.schoolpage.models.UsuarioMateria;
 import com.eschool.schoolpage.repositories.MateriaRepository;
+import com.eschool.schoolpage.repositories.UsuarioMateriaRepository;
 import com.eschool.schoolpage.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -26,11 +30,44 @@ public class MateriaController {
     private MateriaRepository materiaRepository;
     @Autowired
     private UsuarioRepository usuarioRepository;
+    @Autowired
+    private UsuarioMateriaRepository usuarioMateriaRepository;
 
     @GetMapping("/")
     public ResponseEntity<?> getAllMaterias(Authentication authentication){
         List<MateriaDTO> materiaDTOS = materiaRepository.findAll().stream().filter(materia -> materia.isAsset())
                 .map(materia -> new MateriaDTO(materia)).collect(Collectors.toList()).stream().sorted(Comparator.comparing(MateriaDTO::getId).reversed()).collect(Collectors.toList());
+        return new ResponseEntity<>(materiaDTOS, HttpStatus.OK);
+    }
+
+    @GetMapping("/availablesubjects")
+    public ResponseEntity<?> getAllMateriasavailableforAuthenticatedUser(Authentication authentication){
+        Usuario usuario = usuarioRepository.findByMail(authentication.getName());
+        if (usuario == null) {
+            return new ResponseEntity<>("Usuario no encontrado", HttpStatus.NOT_FOUND);
+        }
+        List<MateriaDTO> materiasFromUser = usuario.getUsuarioMaterias().stream().filter(usuarioMateria -> usuarioMateria.isAsset()).map(usuarioMateria -> new MateriaDTO(usuarioMateria.getMateria())).collect(Collectors.toList());
+        if (materiasFromUser == null) {
+            return new ResponseEntity<>("THERE ISN´T SUBJECTS YET", HttpStatus.NOT_FOUND);
+        }
+        Set<Long> materiasFromUserIds = materiasFromUser.stream().map(materiaDTO -> materiaDTO.getId()).collect(Collectors.toSet());
+        List<MateriaDTO> materiaDTOSavailable = materiaRepository.findAll().stream().filter(materia -> !materiasFromUserIds.contains(materia.getId()))
+                .map(materia -> new MateriaDTO(materia)).collect(Collectors.toList());
+        return new ResponseEntity<>(materiaDTOSavailable, HttpStatus.OK);
+    }
+
+    @GetMapping("/mysubjects")
+    public ResponseEntity<?> getAllMateriasFromAuthenticatedUser(Authentication authentication){
+        Usuario usuario = usuarioRepository.findByMail(authentication.getName());
+        if (usuario == null) {
+            return new ResponseEntity<>("Usuario no encontrado", HttpStatus.NOT_FOUND);
+        }
+        UsuarioDTO usuarioDTO = new UsuarioDTO(usuario);
+        List<MateriaDTO> materiaDTOS = usuario.getUsuarioMaterias().stream().filter(usuarioMateria -> usuarioMateria.isAsset()).map(usuarioMateria -> new MateriaDTO(usuarioMateria.getMateria())).collect(Collectors.toList());
+        if (materiaDTOS.isEmpty() || materiaDTOS == null) {
+            return new ResponseEntity<>("No hay meterias", HttpStatus.NOT_FOUND);
+        }
+        //List<MateriaDTO> materiaDTOS = usuarioDTO.getUsuarioMaterias().
         return new ResponseEntity<>(materiaDTOS, HttpStatus.OK);
     }
 

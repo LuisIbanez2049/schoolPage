@@ -105,7 +105,7 @@ public class UsuarioController {
                 return new ResponseEntity<>("YA ESTAS DENTRO DE LA MATERIA " + materia.getNombre(), HttpStatus.OK);
             }
             if (recordLoginMateria.turno().isEmpty() || recordLoginMateria.turno().isBlank()) {
-                return new ResponseEntity<>("Please specify a shift.", HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>("Please specify a shift.", HttpStatus.NOT_FOUND); 
             }
             if (usuarioMateriaa != null && !usuarioMateriaa.isAsset()) {
                 usuarioMateriaa.setAsset(true);

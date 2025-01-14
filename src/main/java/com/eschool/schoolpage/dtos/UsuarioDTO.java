@@ -16,6 +16,7 @@ public class UsuarioDTO {
     private String DNI;
     private boolean asset = true; // "Activo"
     private Rol rol;
+    private String userProfileImg;
     private boolean estaEnUnaMateria = false;
     private List<UsuarioMateriaDTO> usuarioMaterias = new ArrayList<>();
     private List<ComentarioDTO> comentarioDTOS = new ArrayList<>();
@@ -29,6 +30,7 @@ public class UsuarioDTO {
         this.DNI= usuario.getDNI();
         this.asset = usuario.isAsset();
         this.rol = usuario.getRol();
+        this.userProfileImg = usuario.getProfileUserImage();
         this.estaEnUnaMateria = usuario.isEstaEnUnaMateria();
         this.usuarioMaterias = usuario.getUsuarioMaterias().stream().filter(usuarioMateria -> usuarioMateria.isAsset())
                 .map(usuarioMateria -> new UsuarioMateriaDTO(usuarioMateria)).collect(Collectors.toList());
@@ -80,5 +82,9 @@ public class UsuarioDTO {
 
     public List<RespuestaDTO> getRespuestaDTOS() {
         return respuestaDTOS;
+    }
+
+    public String getUserProfileImg() {
+        return userProfileImg;
     }
 }

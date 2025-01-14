@@ -21,6 +21,7 @@ public class Usuario {
     private boolean asset = true; // "Activo"
     private Rol rol;
     private boolean estaEnUnaMateria = false;
+    private String profileUserImage;
 
     @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
     private List<UsuarioMateria> usuarioMaterias = new ArrayList<>();
@@ -35,13 +36,14 @@ public class Usuario {
     //----------------------------Métodos Constructor------------------------------------
     public Usuario() { }
 
-    public Usuario(String name, String lastName, String DNI, String mail, String password, Rol rol) {
+    public Usuario(String name, String lastName, String DNI, String mail, String password, Rol rol, String profileUserImage) {
         this.name = name;
         this.lastName = lastName;
         this.DNI = DNI;
         this.mail = mail;
         this.password = password;
         this.rol = rol;
+        this.profileUserImage = profileUserImage;
     }
     //--------------------------------------------------------------------------------------
 
@@ -139,6 +141,14 @@ public class Usuario {
 
     public void setRespuestas(List<Respuesta> respuestas) {
         this.respuestas = respuestas;
+    }
+
+    public String getProfileUserImage() {
+        return profileUserImage;
+    }
+
+    public void setProfileUserImage(String profileUserImage) {
+        this.profileUserImage = profileUserImage;
     }
     //--------------------------------------------------------------------------------------
 

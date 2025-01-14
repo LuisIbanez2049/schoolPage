@@ -28,16 +28,16 @@ public class SchoolpageApplication {
 		return (args) -> {
 
 			//-------------------------------------USUARIOS-------------------------------------------------
-			Usuario luis = new Usuario("Luis", "Ibañez", "94706338", "luis@gmail.com", passwordEncoder.encode("1234"), Rol.ESTUDIANTE);
-			Usuario tony = new Usuario("Tony", "Stark", "94706338", "tony@gmail.com", passwordEncoder.encode("1234"), Rol.ESTUDIANTE);
+			Usuario luis = new Usuario("Luis", "Ibañez", "94706338", "luis@gmail.com", passwordEncoder.encode("1234"), Rol.ESTUDIANTE, "https://res.cloudinary.com/dhojn5eon/image/upload/v1736828893/luis_we1sms.png");
+			Usuario tony = new Usuario("Tony", "Stark", "94706338", "tony@gmail.com", passwordEncoder.encode("1234"), Rol.ESTUDIANTE, "https://res.cloudinary.com/dhojn5eon/image/upload/v1736828893/tony_ogey5b.png");
 			usuarioRepository.save(luis);
 			usuarioRepository.save(tony);
 
 
-			Usuario antonio = new Usuario("Antonio", "Rigan", "94706338", "antoniorigan@profesor.com", passwordEncoder.encode("1234"), Rol.PROFESOR);
+			Usuario antonio = new Usuario("Antonio", "Rigan", "94706338", "antoniorigan@profesor.com", passwordEncoder.encode("1234"), Rol.PROFESOR, "https://res.cloudinary.com/dhojn5eon/image/upload/v1736828893/professor_c6m1fi.png");
 			usuarioRepository.save(antonio);
 
-			Usuario admin = new Usuario("admin", "admin", "94706332", "admin@admin.com", passwordEncoder.encode("1234"), Rol.ADMIN);
+			Usuario admin = new Usuario("admin", "admin", "94706332", "admin@admin.com", passwordEncoder.encode("1234"), Rol.ADMIN, "https://res.cloudinary.com/dhojn5eon/image/upload/v1736826159/people_14024658_uqxwhc.png");
 			usuarioRepository.save(admin);
 			//--------------------------------------------------------------------------------------
 

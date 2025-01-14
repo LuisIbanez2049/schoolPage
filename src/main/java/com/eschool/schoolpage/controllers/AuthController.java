@@ -114,7 +114,7 @@ public class AuthController {
             rol = Rol.ADMIN;
         }
         String encodePassword = passwordEncoder.encode(recordRegister.password());
-        Usuario newUsuario = new Usuario(recordRegister.name(), recordRegister.lastName(), recordRegister.dni(), recordRegister.email(), encodePassword, rol);
+        Usuario newUsuario = new Usuario(recordRegister.name(), recordRegister.lastName(), recordRegister.dni(), recordRegister.email(), encodePassword, rol, "https://res.cloudinary.com/dhojn5eon/image/upload/v1736826159/people_14024658_uqxwhc.png");
         usuarioRepository.save(newUsuario);
         return new ResponseEntity<>("USER REGISTERED SUCCESSFULLY", HttpStatus.OK);
 

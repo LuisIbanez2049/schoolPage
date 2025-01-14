@@ -13,12 +13,14 @@ public class RespuestaDTO {
     private String nombreUsuario;
     private String respuestaPara;
     private Long usuarioId;
+    private String profileImgFromUserAnswer;
 
     public RespuestaDTO(Respuesta respuesta) {
         this.id = respuesta.getId();
         this.texto = respuesta.getTexto();
         this.fecha = respuesta.getFecha();
         this.nombreUsuario = respuesta.getUsuario().getName() + " " + respuesta.getUsuario().getLastName();
+        this.profileImgFromUserAnswer = respuesta.getUsuario().getProfileUserImage();
         this.usuarioId = respuesta.getUsuario().getId();
         //this.respuestaPara  = respuesta.getComentario().getUsuario().getName() + " " + respuesta.getComentario().getUsuario().getLastName();
         this.respuestaPara  = respuesta.getRespuestaPara();
@@ -47,5 +49,9 @@ public class RespuestaDTO {
 
     public Long getUsuarioId() {
         return usuarioId;
+    }
+
+    public String getProfileImgFromUserAnswer() {
+        return profileImgFromUserAnswer;
     }
 }

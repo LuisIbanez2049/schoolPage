@@ -20,6 +20,7 @@ public class ComentarioDTO {
     private String nombreUsuario;
     private String nombreContenido;
     private Long userId;
+    private String profileImgFromUserComment;
 
     public ComentarioDTO(Comentario comentario) {
         this.id = comentario.getId();
@@ -27,6 +28,7 @@ public class ComentarioDTO {
         this.fecha = comentario.getFecha();
         this.nombreContenido = comentario.getContenido().getTitulo();
         this.nombreUsuario = comentario.getUsuario().getName() + " " + comentario.getUsuario().getLastName();
+        this.profileImgFromUserComment = comentario.getUsuario().getProfileUserImage();
         this.userId = comentario.getUsuario().getId();
         this.respuestas = comentario.getRespuestas().stream().filter(respuesta -> respuesta.isAsset()).map(respuesta -> new RespuestaDTO(respuesta))
                 .collect(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(RespuestaDTO::getId))));
@@ -76,5 +78,9 @@ public class ComentarioDTO {
 
     public Long getUserId() {
         return userId;
+    }
+
+    public String getProfileImgFromUserComment() {
+        return profileImgFromUserComment;
     }
 }

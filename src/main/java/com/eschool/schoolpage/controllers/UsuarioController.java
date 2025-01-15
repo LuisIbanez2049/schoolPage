@@ -1,9 +1,6 @@
 package com.eschool.schoolpage.controllers;
 
-import com.eschool.schoolpage.dtos.MateriaDTO;
-import com.eschool.schoolpage.dtos.RecordLoginMateria;
-import com.eschool.schoolpage.dtos.RecordSalirDeMateria;
-import com.eschool.schoolpage.dtos.UsuarioDTO;
+import com.eschool.schoolpage.dtos.*;
 import com.eschool.schoolpage.models.JornadaTurno;
 import com.eschool.schoolpage.models.Materia;
 import com.eschool.schoolpage.models.Usuario;
@@ -48,6 +45,60 @@ public class UsuarioController {
             }
             return new ResponseEntity<>(new UsuarioDTO(usuario), HttpStatus.OK);
         }  catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
+    }
+
+    @PatchMapping("/configuration")
+    public ResponseEntity<?> editUserInformation(Authentication authentication,@RequestBody RecordEditUserInformation recordEditUserInformation){
+        try {
+            Usuario usuario = usuarioRepository.findByMail(authentication.getName());
+            if (usuario == null) {
+                return new ResponseEntity<>("Usuario no encontrado", HttpStatus.NOT_FOUND);
+            }
+
+            if (!recordEditUserInformation.name().isEmpty()) {
+                if (recordEditUserInformation.name().length() < 2) { return new ResponseEntity<>("Invalid first name. Please provide at least 2 characters.", HttpStatus.BAD_REQUEST);}
+                usuario.setName(recordEditUserInformation.name());
+                usuarioRepository.save(usuario);
+                return new ResponseEntity<>("Name was updated successfully", HttpStatus.OK);
+            }
+
+            if (!recordEditUserInformation.lastName().isEmpty()) {
+                if (recordEditUserInformation.lastName().length() < 2) { return new ResponseEntity<>("Invalid last name. Please provide at least 2 characters.", HttpStatus.BAD_REQUEST);}
+                usuario.setLastName(recordEditUserInformation.lastName());
+                usuarioRepository.save(usuario);
+                return new ResponseEntity<>("Last Name was updated successfully", HttpStatus.OK);
+            }
+
+            if (!recordEditUserInformation.dni().isEmpty()) {
+                usuario.setDNI(recordEditUserInformation.dni());
+                usuarioRepository.save(usuario);
+                return new ResponseEntity<>("DNI was updated successfully", HttpStatus.OK);
+            }
+
+            if (!recordEditUserInformation.email().isEmpty()) {
+                if (!recordEditUserInformation.email().contains("@")) { return new ResponseEntity<>("Invalid email. It must contain an '@' character.", HttpStatus.BAD_REQUEST); }
+                if (!recordEditUserInformation.email().contains(".com") && !recordEditUserInformation.email().contains(".net") && !recordEditUserInformation.email().contains(".org") &&
+                        !recordEditUserInformation.email().contains(".co") && !recordEditUserInformation.email().contains(".info")) {
+                    return new ResponseEntity<>("Invalid email. Please enter a valid domain extension since '.com', '.net', '.org', '.co' or '.info'.", HttpStatus.BAD_REQUEST); }
+                if (recordEditUserInformation.email().contains("@.")) { return new ResponseEntity<>("Invalid email. Please provide a valid domain since 'gmail', 'yahoo', etc., " +
+                        "between the characters '@' and the character '.'", HttpStatus.BAD_REQUEST); }
+                if (usuarioRepository.findByMail(recordEditUserInformation.email()) != null) {
+                    return new ResponseEntity<>("Email not available. Already in use.", HttpStatus.BAD_REQUEST);
+                }
+                usuario.setMail(recordEditUserInformation.email());
+                usuarioRepository.save(usuario);
+                return new ResponseEntity<>("Email was updated successfully", HttpStatus.OK);
+            }
+
+            if (!recordEditUserInformation.profileImg().isEmpty()) {
+                usuario.setProfileUserImage(recordEditUserInformation.profileImg());
+                usuarioRepository.save(usuario);
+                return new ResponseEntity<>("Profile image was updated successfully", HttpStatus.OK);
+            }
+
+            return new ResponseEntity<>("Any parameter was not changed", HttpStatus.BAD_REQUEST);
+
+        } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
     }
 
 

@@ -70,6 +70,7 @@ public class UsuarioController {
             }
 
             if (!recordEditUserInformation.dni().isEmpty()) {
+                if (recordEditUserInformation.dni().length() < 2) { return new ResponseEntity<>("Invalid DNI. Please provide at least 2 characters.", HttpStatus.BAD_REQUEST);}
                 usuario.setDNI(recordEditUserInformation.dni());
                 usuarioRepository.save(usuario);
                 return new ResponseEntity<>("DNI was updated successfully", HttpStatus.OK);

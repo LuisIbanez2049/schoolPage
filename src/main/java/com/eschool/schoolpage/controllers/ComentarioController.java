@@ -63,7 +63,7 @@ public class ComentarioController {
                 return new ResponseEntity<>("Contenido no encontrado", HttpStatus.NOT_FOUND);
             }
             if (recordComentario.texto().isBlank()) {
-                return new ResponseEntity<>("Campo vacio.", HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>("Comment can not be empty.", HttpStatus.NOT_FOUND);
             }
 
             Comentario newComentario = new Comentario(recordComentario.texto(), LocalDateTime.now());
@@ -93,7 +93,7 @@ public class ComentarioController {
                 return new ResponseEntity<>("Este comentario no te pertenece", HttpStatus.FORBIDDEN);
             }
             if (recordModificarComentario.texto().isBlank()) {
-                return new ResponseEntity<>("Campo vacio.", HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>("COMMENT CAN NOT BE EMPTY", HttpStatus.NOT_FOUND);
             }
 
             comentario.setTexto(recordModificarComentario.texto());

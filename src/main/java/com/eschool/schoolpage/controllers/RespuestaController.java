@@ -100,7 +100,7 @@ public class RespuestaController {
                 return new ResponseEntity<>("Esta respuesta no te pretenece", HttpStatus.FORBIDDEN);
             }
             if (recordModificarRespuesta.texto().isBlank()) {
-                return new ResponseEntity<>("Campo vacio.", HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>("Answer can not be empty.", HttpStatus.NOT_FOUND);
             }
 
             respuesta.setTexto(recordModificarRespuesta.texto());

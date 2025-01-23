@@ -145,7 +145,7 @@ public class SchoolpageApplication {
 
 
 			//-------------------------------------Asocio las materias con los usuarios-------------------------------------------------
-			UsuarioMateria luisMateria1 = new UsuarioMateria(JornadaTurno.MORNIG);
+			UsuarioMateria luisMateria1 = new UsuarioMateria(JornadaTurno.MORNING);
 			luis.addUsuarioMateria(luisMateria1);
 			matematica.addUsuarioMateria(luisMateria1);
 			usuarioMateriaRepository.save(luisMateria1);
@@ -156,17 +156,17 @@ public class SchoolpageApplication {
 			usuarioMateriaRepository.save(luisMateria2);
 
 
-			UsuarioMateria tonyMateria1 = new UsuarioMateria(JornadaTurno.MORNIG);
+			UsuarioMateria tonyMateria1 = new UsuarioMateria(JornadaTurno.MORNING);
 			quimica.addUsuarioMateria(tonyMateria1);
 			tony.addUsuarioMateria(tonyMateria1);
 			usuarioMateriaRepository.save(tonyMateria1);
 
-			UsuarioMateria tonyMateria2 = new UsuarioMateria(JornadaTurno.MORNIG);
+			UsuarioMateria tonyMateria2 = new UsuarioMateria(JornadaTurno.MORNING);
 			matematica.addUsuarioMateria(tonyMateria2);
 			tony.addUsuarioMateria(tonyMateria2);
 			usuarioMateriaRepository.save(tonyMateria2);
 
-			UsuarioMateria antonioPrefesor = new UsuarioMateria(JornadaTurno.MORNIG);
+			UsuarioMateria antonioPrefesor = new UsuarioMateria(JornadaTurno.MORNING);
 			matematica.addUsuarioMateria(antonioPrefesor);
 			antonio.addUsuarioMateria(antonioPrefesor);
 			usuarioMateriaRepository.save(antonioPrefesor);

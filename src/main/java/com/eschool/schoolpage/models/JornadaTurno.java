@@ -1,7 +1,7 @@
 package com.eschool.schoolpage.models;
 
 public enum JornadaTurno {
-    MORNIG,
+    MORNING,
     EVENING,
     NIGHT
 }

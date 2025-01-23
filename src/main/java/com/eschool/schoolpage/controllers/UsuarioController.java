@@ -9,7 +9,6 @@ import com.eschool.schoolpage.repositories.MateriaRepository;
 import com.eschool.schoolpage.repositories.UsuarioMateriaRepository;
 import com.eschool.schoolpage.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.rsocket.context.RSocketPortInfoApplicationContextInitializer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -146,7 +145,7 @@ public class UsuarioController {
                 return new ResponseEntity<>("Invalid access code.", HttpStatus.NOT_FOUND);
             }
             UsuarioMateria usuarioMateriaa = materia.getUsuarioMaterias().stream().filter(usuarioMateria -> usuarioMateria.getUsuario().getId().equals(usuario.getId())).findFirst().orElse(null);
-            JornadaTurno jornadaTurno = JornadaTurno.MORNIG;
+            JornadaTurno jornadaTurno = JornadaTurno.MORNING;
             if (recordLoginMateria.turno().equalsIgnoreCase("EVENING")) {
                 jornadaTurno = JornadaTurno.EVENING;
             }

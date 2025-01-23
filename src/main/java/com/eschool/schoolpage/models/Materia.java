@@ -15,7 +15,10 @@ public class Materia {
     private Long id;
 
     private String nombre;
+
+    @Lob // Esto indica que el campo debe almacenarse como un tipo de datos grande. Me permite ingresar cadenas de texto mas largas.
     private String descripcion;
+
     private String portada;
     private boolean isAsset = true;
     private String color;

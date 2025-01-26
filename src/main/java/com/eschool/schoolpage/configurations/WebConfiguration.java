@@ -45,7 +45,8 @@ public class WebConfiguration {
                 // Configura las reglas de autorización para las solicitudes HTTP.
                 .authorizeHttpRequests(authorize ->
                                 authorize
-                                        .requestMatchers("/api/materias/", "/api/materias/*","/api/materias/mysubjects", "/api/materias/availablesubjects", "/api/usuarios/leaveSubject", "/api/usuarios/configuration", "/api/auth/current", "/api/contenido/*", "/api/comentario/*", "/api/respuesta/fromAcomment/*").hasAnyRole("ALUMNO","PROFESOR", "ADMIN")
+                                        .requestMatchers("/api/materias/", "/api/materias/*","/api/materias/mysubjects", "/api/materias/availablesubjects", "/api/usuarios/leaveSubject",
+                                                "/api/usuarios/configuration", "/api/auth/current", "/api/contenido/*", "/api/comentario/*", "/api/respuesta/fromAcomment/*").hasAnyRole("ALUMNO","PROFESOR", "ADMIN")
                                         .requestMatchers("/api/usuarios/loginMateria", "/api/respuesta/create", "/api/respuesta/modificar",
                                                 "/api/auth/current", "/api/comentario/create", "/api/comentario/authenticatedUserDesactivar/**",
                                                 "/api/respuesta/authenticatedUserDesactivar/**").hasAnyRole("ALUMNO", "PROFESOR")
@@ -54,7 +55,7 @@ public class WebConfiguration {
 
                                         //.requestMatchers("/h2-console/**").permitAll()
                                         // Permite el acceso sin autenticación a las rutas especificadas (login, registro, y consola H2).
-                                        .requestMatchers( "/api/usuarios/", "/api/respuesta/", "/api/materias/create", "/api/contenido/",
+                                        .requestMatchers( "/api/usuarios/", "/api/respuesta/", "/api/materias/create","/api/materias/all", "/api/contenido/",
                                                 "/api/comentario/", "/api/respuesta/**", "/api/usuarios/**", "/api/respuesta/adminDesactivar/**", "/h2-console/**",
                                                 "/api/materias/activar/**", "/api/contenido/", "/api/materias/desactivar/**",
                                                 "/api/comentario/", "/api/comentario/adminDesactivar/**").hasRole("ADMIN")

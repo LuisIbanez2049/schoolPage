@@ -40,6 +40,13 @@ public class MateriaController {
         return new ResponseEntity<>(materiaDTOS, HttpStatus.OK);
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<?> getAllMateriasAdmin(Authentication authentication){
+        List<MateriaDTO> materiaDTOS = materiaRepository.findAll().stream().map(materia -> new MateriaDTO(materia)).collect(Collectors.toList())
+                .stream().sorted(Comparator.comparing(MateriaDTO::getId).reversed()).collect(Collectors.toList());
+        return new ResponseEntity<>(materiaDTOS, HttpStatus.OK);
+    }
+
     @GetMapping("/availablesubjects")
     public ResponseEntity<?> getAllMateriasavailableforAuthenticatedUser(Authentication authentication){
         Usuario usuario = usuarioRepository.findByMail(authentication.getName());

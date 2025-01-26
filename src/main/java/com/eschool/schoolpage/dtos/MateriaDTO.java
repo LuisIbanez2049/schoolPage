@@ -14,6 +14,7 @@ public class MateriaDTO {
     private String descripcion;
     private String portada;
     private String color;
+    private boolean isAsset;
     Set<ContenidoDTO> contenidos = new HashSet<>();
     List<UsuarioDTO> alumnos = new ArrayList<>();
     List<UsuarioDTO> profesores = new ArrayList<>();
@@ -24,6 +25,7 @@ public class MateriaDTO {
         this.descripcion = materia.getDescripcion();
         this.portada = materia.getPortada();
         this.color = materia.getColor();
+        this.isAsset = materia.isAsset();
         this.contenidos = materia.getContenidos().stream().filter(contenido -> contenido.isAsset())
                 .map(contenido -> new ContenidoDTO(contenido)).collect(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(ContenidoDTO::getId).reversed())));
         this.alumnos = materia.getUsuarioMaterias().stream().filter(usuarioMateria -> usuarioMateria.isAsset()).filter(usuarioMateria -> usuarioMateria.getUsuario().getRol().equals(Rol.ESTUDIANTE))
@@ -63,5 +65,9 @@ public class MateriaDTO {
 
     public String getColor() {
         return color;
+    }
+
+    public boolean isAsset() {
+        return isAsset;
     }
 }

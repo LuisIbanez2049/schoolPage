@@ -17,6 +17,7 @@ public class ContenidoDTO {
     private LocalDateTime fechaDePublicacion;
     private String detalleDelContenido;
     private String archivo;
+    private boolean isAsset;
     private Set<ComentarioDTO> comentarios = new HashSet<>();
 
 
@@ -26,7 +27,9 @@ public class ContenidoDTO {
         this.detalleDelContenido = contenido.getDetalleDelContenido();
         this.fechaDePublicacion = contenido.getFechaDePublicacion();
         this.archivo = contenido.getArchivo();
-        this.comentarios = contenido.getComentarios().stream().filter(comentario -> comentario.isAsset()).map(comentario -> new ComentarioDTO(comentario)).collect(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(ComentarioDTO::getId).reversed())));
+        this.isAsset = contenido.isAsset();
+        this.comentarios = contenido.getComentarios().stream().filter(comentario -> comentario.isAsset())
+                .map(comentario -> new ComentarioDTO(comentario)).collect(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(ComentarioDTO::getId).reversed())));
     }
 
 
@@ -48,6 +51,10 @@ public class ContenidoDTO {
 
     public String getArchivo() {
         return archivo;
+    }
+
+    public boolean isAsset() {
+        return isAsset;
     }
 
     public Set<ComentarioDTO> getComentarios() {

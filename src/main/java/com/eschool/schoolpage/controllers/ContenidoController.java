@@ -46,6 +46,19 @@ public class ContenidoController {
         } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<?> getAllContenidosAdmin(Authentication authentication){
+        try {
+            Usuario usuario = usuarioRepository.findByMail(authentication.getName());
+            if (usuario.getRol() != Rol.ADMIN) {
+                return new ResponseEntity<>("NO TIENES PERMISO PARA REALIZAR ESTA ACCION", HttpStatus.FORBIDDEN);
+            }
+            List<ContenidoDTO> contenidoDTOS = contenidoRepository.findAll().stream()
+                    .map(contenido -> new ContenidoDTO(contenido)).collect(Collectors.toList());
+            return new ResponseEntity<>(contenidoDTOS, HttpStatus.OK);
+        } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getContenidoById(Authentication authentication, @PathVariable Long id){
         try {

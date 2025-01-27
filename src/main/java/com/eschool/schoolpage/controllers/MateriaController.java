@@ -1,9 +1,6 @@
 package com.eschool.schoolpage.controllers;
 
-import com.eschool.schoolpage.dtos.MateriaDTO;
-import com.eschool.schoolpage.dtos.RecordModificarMateria;
-import com.eschool.schoolpage.dtos.RecordNewMateria;
-import com.eschool.schoolpage.dtos.UsuarioDTO;
+import com.eschool.schoolpage.dtos.*;
 import com.eschool.schoolpage.models.Materia;
 import com.eschool.schoolpage.models.Rol;
 import com.eschool.schoolpage.models.Usuario;
@@ -42,9 +39,9 @@ public class MateriaController {
 
     @GetMapping("/all")
     public ResponseEntity<?> getAllMateriasAdmin(Authentication authentication){
-        List<MateriaDTO> materiaDTOS = materiaRepository.findAll().stream().map(materia -> new MateriaDTO(materia)).collect(Collectors.toList())
-                .stream().sorted(Comparator.comparing(MateriaDTO::getId).reversed()).collect(Collectors.toList());
-        return new ResponseEntity<>(materiaDTOS, HttpStatus.OK);
+        List<MateriaAdminDTO> materiaAdminDTOS = materiaRepository.findAll().stream().map(materia -> new MateriaAdminDTO(materia)).collect(Collectors.toList())
+                .stream().sorted(Comparator.comparing(MateriaAdminDTO::getId).reversed()).collect(Collectors.toList());
+        return new ResponseEntity<>(materiaAdminDTOS, HttpStatus.OK);
     }
 
     @GetMapping("/availablesubjects")
@@ -87,6 +84,17 @@ public class MateriaController {
                 return new ResponseEntity<>("Materia not found", HttpStatus.NOT_FOUND);
             }
             return new ResponseEntity<>(new MateriaDTO(materia), HttpStatus.OK);
+        } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
+    }
+
+    @GetMapping("/admin/{id}")
+    public ResponseEntity<?> findMateriaByIdAdmin(Authentication authentication, @PathVariable Long id){
+        try {
+            Materia materia = materiaRepository.findById(id).orElse(null);
+            if (materia == null) {
+                return new ResponseEntity<>("Materia not found", HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(new MateriaAdminDTO(materia), HttpStatus.OK);
         } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
     }
     @PostMapping("/create")

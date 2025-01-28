@@ -1,5 +1,6 @@
 package com.eschool.schoolpage.controllers;
 
+import com.eschool.schoolpage.dtos.ContenidoAdminDTO;
 import com.eschool.schoolpage.dtos.ContenidoDTO;
 import com.eschool.schoolpage.dtos.RecordCrearContenido;
 import com.eschool.schoolpage.dtos.RecordModificarContenido;
@@ -67,6 +68,17 @@ public class ContenidoController {
                 return new ResponseEntity<>("Contenido con id: " + id + " no encontrado", HttpStatus.NOT_FOUND);
             }
             return new ResponseEntity<>(new ContenidoDTO(contenido), HttpStatus.OK);
+        } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
+    }
+
+    @GetMapping("/admin/{id}")
+    public ResponseEntity<?> getContenidoByIdAdmin(Authentication authentication, @PathVariable Long id){
+        try {
+            Contenido contenido = contenidoRepository.findById(id).orElse(null);
+            if (contenido == null) {
+                return new ResponseEntity<>("Contenido con id: " + id + " no encontrado", HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(new ContenidoAdminDTO(contenido), HttpStatus.OK);
         } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
     }
 

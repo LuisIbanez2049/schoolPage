@@ -56,9 +56,9 @@ public class WebConfiguration {
                                         //.requestMatchers("/h2-console/**").permitAll()
                                         // Permite el acceso sin autenticación a las rutas especificadas (login, registro, y consola H2).
                                         .requestMatchers( "/api/usuarios/", "/api/respuesta/", "/api/materias/create","/api/materias/all", "/api/materias/admin/**", "/api/contenido/", "/api/contenido/all",
-                                                "/api/comentario/", "/api/respuesta/**", "/api/usuarios/**", "/api/respuesta/adminDesactivar/**", "/h2-console/**",
-                                                "/api/materias/activar/**", "/api/contenido/", "/api/materias/desactivar/**",
-                                                "/api/comentario/", "/api/comentario/adminDesactivar/**").hasRole("ADMIN")
+                                                "/api/contenido/admin/**","/api/comentario/", "/api/comentario/admin/**", "/api/respuesta/**", "/api/usuarios/**", "/api/respuesta/adminDesactivar/**", "/api/respuesta/adminActivar/**",
+                                                "/h2-console/**", "/api/materias/activar/**", "/api/contenido/", "/api/materias/desactivar/**",
+                                                "/api/comentario/", "/api/comentario/adminDesactivar/**", "/api/comentario/adminActivar/**").hasRole("ADMIN")
                                         .requestMatchers("/api/auth/login", "/api/auth/register").permitAll()
                                         // Permite el acceso sin autenticación a cualquier otra solicitud (esto puede ser modificado según los requisitos).
                                         .anyRequest().authenticated()

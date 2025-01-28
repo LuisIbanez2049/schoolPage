@@ -147,4 +147,21 @@ public class RespuestaController {
             return new ResponseEntity<>("Respuesta eliminada", HttpStatus.OK);
         } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
     }
+
+    @PatchMapping("/adminActivar/{id}")
+    public ResponseEntity<?> activarRespuestaAdmin(Authentication authentication, @PathVariable Long id){
+        try {
+            Usuario usuario = usuarioRepository.findByMail(authentication.getName());
+            Respuesta respuesta = respuestaRepository.findById(id).orElse(null);
+            if (usuario == null) {
+                return new ResponseEntity<>("Usuario no encontrado", HttpStatus.NOT_FOUND);
+            }
+            if (respuesta == null) {
+                return new ResponseEntity<>("Respuesta no encontrada", HttpStatus.NOT_FOUND);
+            }
+            respuesta.setAsset(true);
+            respuestaRepository.save(respuesta);
+            return new ResponseEntity<>("Respuesta restaurada", HttpStatus.OK);
+        } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
+    }
 }

@@ -51,6 +51,17 @@ public class ComentarioController {
         } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
     }
 
+    @GetMapping("/admin/{id}")
+    public ResponseEntity<?> getComentarioByIdAdmin(Authentication authentication, @PathVariable Long id){
+        try {
+            Comentario comentario = comentarioRepository.findById(id).orElse(null);
+            if (comentario == null) {
+                return new ResponseEntity<>("Comentario con id: " + id + " no encontrado", HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(new ComentarioAdminDTO(comentario), HttpStatus.OK);
+        } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
+    }
+
     @PostMapping("/create")
     public ResponseEntity<?> crearComentario(Authentication authentication, @RequestBody RecordComentario recordComentario){
         try {
@@ -138,6 +149,23 @@ public class ComentarioController {
             comentario.setAsset(false);
             comentarioRepository.save(comentario);
             return new ResponseEntity<>("Comentario eliminado", HttpStatus.OK);
+        } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
+    }
+
+    @PatchMapping("/adminActivar/{id}")
+    public ResponseEntity<?> activarComentarioAdmin(Authentication authentication, @PathVariable Long id){
+        try {
+            Usuario usuario = usuarioRepository.findByMail(authentication.getName());
+            Comentario comentario = comentarioRepository.findById(id).orElse(null);
+            if (usuario == null) {
+                return new ResponseEntity<>("Usuario no encontrado", HttpStatus.NOT_FOUND);
+            }
+            if (comentario == null) {
+                return new ResponseEntity<>("Comentario no encontrado", HttpStatus.NOT_FOUND);
+            }
+            comentario.setAsset(true);
+            comentarioRepository.save(comentario);
+            return new ResponseEntity<>("Comentario reactivado", HttpStatus.OK);
         } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
     }
 }

@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 public class RespuestaDTO {
     private Long id;
-
+    private boolean isAsset;
     private String texto;
     private LocalDateTime fecha;
     private String nombreUsuario;
@@ -17,6 +17,7 @@ public class RespuestaDTO {
 
     public RespuestaDTO(Respuesta respuesta) {
         this.id = respuesta.getId();
+        this.isAsset = respuesta.isAsset();
         this.texto = respuesta.getTexto();
         this.fecha = respuesta.getFecha();
         this.nombreUsuario = respuesta.getUsuario().getName() + " " + respuesta.getUsuario().getLastName();
@@ -29,6 +30,10 @@ public class RespuestaDTO {
 
     public Long getId() {
         return id;
+    }
+
+    public boolean isAsset() {
+        return isAsset;
     }
 
     public String getTexto() {

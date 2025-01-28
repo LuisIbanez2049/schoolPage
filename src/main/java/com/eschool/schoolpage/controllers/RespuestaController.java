@@ -41,6 +41,17 @@ public class RespuestaController {
         } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
     }
 
+    @GetMapping("/admin/{id}")
+    public ResponseEntity<?> getRespuestasById(Authentication authentication, @PathVariable Long id){
+        try {
+            Respuesta respuesta = respuestaRepository.findById(id).orElse(null);
+            if (respuesta == null) {
+                return new ResponseEntity<>("Respuesta con id: " + id + " no encontrado", HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(new RespuestaDTO(respuesta), HttpStatus.OK);
+        } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
+    }
+
     @GetMapping("/fromAcomment/{id}")
     public ResponseEntity<?> getAllRespuestasFromAcomment(Authentication authentication, @PathVariable Long id){
         try {

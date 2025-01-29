@@ -170,6 +170,46 @@ public class MateriaController {
         } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
     }
 
+
+    @PatchMapping("/modificarMateriaAdmin")
+    public ResponseEntity<?> modificarMateriaAdmin(Authentication authentication,@RequestBody RecordModificarMateriaAdmin recordModificarMateriaAdmin){
+        try {
+            Usuario usuario = usuarioRepository.findByMail(authentication.getName());
+            Materia materia = materiaRepository.findById(recordModificarMateriaAdmin.idMateria()).orElse(null);
+            if (usuario == null) {
+                return new ResponseEntity<>("Usuario no encontrado", HttpStatus.NOT_FOUND);
+            }
+            if (materia == null) {
+                return new ResponseEntity<>("Materia no encontrada", HttpStatus.NOT_FOUND);
+            }
+            if (!recordModificarMateriaAdmin.nombre().isEmpty()) {
+                materia.setNombre(recordModificarMateriaAdmin.nombre());
+                materiaRepository.save(materia);
+                return new ResponseEntity<>("Titulo modificado con exito", HttpStatus.OK);
+            }
+            if (!recordModificarMateriaAdmin.descripcion().isEmpty()) {
+                materia.setDescripcion(recordModificarMateriaAdmin.descripcion());
+                materiaRepository.save(materia);
+                return new ResponseEntity<>("Descripción modificado con exito", HttpStatus.OK);
+
+            }
+            if (!recordModificarMateriaAdmin.portada().isEmpty()) {
+                materia.setPortada(recordModificarMateriaAdmin.portada());
+                materiaRepository.save(materia);
+                return new ResponseEntity<>("Portada modificado con exito", HttpStatus.OK);
+            }
+            if (!recordModificarMateriaAdmin.accessCode().isEmpty()) {
+                materia.setAccessCode(recordModificarMateriaAdmin.accessCode());
+                materiaRepository.save(materia);
+                return new ResponseEntity<>("Acces code modificado con exito", HttpStatus.OK);
+            }
+            return new ResponseEntity<>("", HttpStatus.OK);
+
+
+        } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
+    }
+
+
     @DeleteMapping("/desactivar/{id}")
     public ResponseEntity<?> borrarMateria(Authentication authentication,@PathVariable Long id ){
         try {

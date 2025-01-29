@@ -70,4 +70,5 @@ public class MateriaDTO {
     public boolean isAsset() {
         return isAsset;
     }
+
 }

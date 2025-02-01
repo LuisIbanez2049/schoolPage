@@ -102,6 +102,62 @@ public class UsuarioController {
     }
 
 
+    @PatchMapping("/configurationAdmin")
+    public ResponseEntity<?> editUserInformationAdmin(Authentication authentication,@RequestBody RecordUserInformationAdmin recordUserInformationAdmin){
+        try {
+            Usuario usuario = usuarioRepository.findById(recordUserInformationAdmin.id()).orElse(null);
+            if (usuario == null) {
+                return new ResponseEntity<>("Usuario no encontrado", HttpStatus.NOT_FOUND);
+            }
+
+            if (!recordUserInformationAdmin.name().isEmpty()) {
+                if (recordUserInformationAdmin.name().length() < 2) { return new ResponseEntity<>("Invalid first name. Please provide at least 2 characters.", HttpStatus.BAD_REQUEST);}
+                usuario.setName(recordUserInformationAdmin.name());
+                usuarioRepository.save(usuario);
+                return new ResponseEntity<>("Name was updated successfully", HttpStatus.OK);
+            }
+
+            if (!recordUserInformationAdmin.lastName().isEmpty()) {
+                if (recordUserInformationAdmin.lastName().length() < 2) { return new ResponseEntity<>("Invalid last name. Please provide at least 2 characters.", HttpStatus.BAD_REQUEST);}
+                usuario.setLastName(recordUserInformationAdmin.lastName());
+                usuarioRepository.save(usuario);
+                return new ResponseEntity<>("Last Name was updated successfully", HttpStatus.OK);
+            }
+
+            if (!recordUserInformationAdmin.dni().isEmpty()) {
+                if (recordUserInformationAdmin.dni().length() < 2) { return new ResponseEntity<>("Invalid DNI. Please provide at least 2 characters.", HttpStatus.BAD_REQUEST);}
+                usuario.setDNI(recordUserInformationAdmin.dni());
+                usuarioRepository.save(usuario);
+                return new ResponseEntity<>("DNI was updated successfully", HttpStatus.OK);
+            }
+
+            if (!recordUserInformationAdmin.email().isEmpty()) {
+                if (!recordUserInformationAdmin.email().contains("@")) { return new ResponseEntity<>("Invalid email. It must contain an '@' character.", HttpStatus.BAD_REQUEST); }
+                if (!recordUserInformationAdmin.email().contains(".com") && !recordUserInformationAdmin.email().contains(".net") && !recordUserInformationAdmin.email().contains(".org") &&
+                        !recordUserInformationAdmin.email().contains(".co") && !recordUserInformationAdmin.email().contains(".info")) {
+                    return new ResponseEntity<>("Invalid email. Please enter a valid domain extension since '.com', '.net', '.org', '.co' or '.info'.", HttpStatus.BAD_REQUEST); }
+                if (recordUserInformationAdmin.email().contains("@.")) { return new ResponseEntity<>("Invalid email. Please provide a valid domain since 'gmail', 'yahoo', etc., " +
+                        "between the characters '@' and the character '.'", HttpStatus.BAD_REQUEST); }
+                if (usuarioRepository.findByMail(recordUserInformationAdmin.email()) != null) {
+                    return new ResponseEntity<>("Email not available. Already in use.", HttpStatus.BAD_REQUEST);
+                }
+                usuario.setMail(recordUserInformationAdmin.email());
+                usuarioRepository.save(usuario);
+                return new ResponseEntity<>("Email was updated successfully", HttpStatus.OK);
+            }
+
+            if (!recordUserInformationAdmin.profileImg().isEmpty()) {
+                usuario.setProfileUserImage(recordUserInformationAdmin.profileImg());
+                usuarioRepository.save(usuario);
+                return new ResponseEntity<>("Profile image was updated successfully", HttpStatus.OK);
+            }
+
+            return new ResponseEntity<>("Any parameter was not changed", HttpStatus.BAD_REQUEST);
+
+        } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
+    }
+
+
     @PatchMapping("/leaveSubject")
     public ResponseEntity<?> salirDeMateria(Authentication authentication, @RequestBody RecordSalirDeMateria recordSalirDeMateria){
         Usuario usuario = usuarioRepository.findById(recordSalirDeMateria.idUsuario()).orElse(null);

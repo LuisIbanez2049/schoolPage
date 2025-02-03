@@ -7,11 +7,13 @@ public class UsuarioMateriaDTO {
     private JornadaTurno jornadaTurno;
     private String nombreMateria;
     private Long id;
+    private Long materiaId;
 
     public UsuarioMateriaDTO(UsuarioMateria usuarioMateria) {
         this.jornadaTurno = usuarioMateria.getJornadaTurno();
         this.nombreMateria = usuarioMateria.getMateria().getNombre();
         this.id = usuarioMateria.getId();
+        this.materiaId = usuarioMateria.getMateria().getId();
     }
 
     public JornadaTurno getJornadaTurno() {
@@ -24,5 +26,9 @@ public class UsuarioMateriaDTO {
 
     public Long getId() {
         return id;
+    }
+
+    public Long getMateriaId() {
+        return materiaId;
     }
 }

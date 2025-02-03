@@ -46,6 +46,17 @@ public class UsuarioController {
         }  catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
     }
 
+    @GetMapping("/admin/{id}")
+    public ResponseEntity<?> findUsuarioAdmin(Authentication authentication, @PathVariable Long id){
+        try {
+            Usuario usuario = usuarioRepository.findById(id).orElse(null);
+            if (usuario == null) {
+                return new ResponseEntity<>("Usuario no encontrado.", HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(new UsuarioAdminDTO(usuario), HttpStatus.OK);
+        }  catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
+    }
+
     @PatchMapping("/configuration")
     public ResponseEntity<?> editUserInformation(Authentication authentication,@RequestBody RecordEditUserInformation recordEditUserInformation){
         try {

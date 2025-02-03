@@ -19,6 +19,7 @@ public class ComentarioAdminDTO {
     private String nombreUsuario;
     private String nombreContenido;
     private Long userId;
+    private String nombreDeMateria;
     private String profileImgFromUserComment;
 
     public ComentarioAdminDTO(Comentario comentario) {
@@ -26,6 +27,7 @@ public class ComentarioAdminDTO {
         this.isAsset = comentario.isAsset();
         this.texto = comentario.getTexto();
         this.fecha = comentario.getFecha();
+        this.nombreDeMateria = comentario.getContenido().getMateria().getNombre();
         this.nombreContenido = comentario.getContenido().getTitulo();
         this.nombreUsuario = comentario.getUsuario().getName() + " " + comentario.getUsuario().getLastName();
         this.profileImgFromUserComment = comentario.getUsuario().getProfileUserImage();
@@ -86,5 +88,9 @@ public class ComentarioAdminDTO {
 
     public String getProfileImgFromUserComment() {
         return profileImgFromUserComment;
+    }
+
+    public String getNombreDeMateria() {
+        return nombreDeMateria;
     }
 }

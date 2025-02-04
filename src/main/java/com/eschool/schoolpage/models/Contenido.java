@@ -26,6 +26,9 @@ public class Contenido {
     @OneToMany(mappedBy = "contenido", fetch = FetchType.EAGER)
     Set<Comentario> comentarios = new HashSet<>();
 
+    @OneToMany(mappedBy = "contenido", fetch = FetchType.EAGER)
+    Set<Archivo> archivos = new HashSet<>();
+
     //----------------------------Métodos Constructor------------------------------------
     public Contenido() { }
 
@@ -98,12 +101,29 @@ public class Contenido {
     public void setAsset(boolean asset) {
         isAsset = asset;
     }
+
+    public Set<Archivo> getArchivos() {
+        return archivos;
+    }
+
+    public void setArchivos(Set<Archivo> archivos) {
+        this.archivos = archivos;
+    }
     //--------------------------------------------------------------------------------------
+
+
 
 
     public void addComentario(Comentario comentario){
         comentario.setContenido(this);
         this.comentarios.add(comentario);
     }
+
+    public void addArchivo(Archivo archivo){
+        archivo.setContenido(this);
+        this.archivos.add(archivo);
+    }
+
+
 
 }

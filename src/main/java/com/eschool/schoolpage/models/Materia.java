@@ -27,6 +27,7 @@ public class Materia {
     @OneToMany(mappedBy = "materia", fetch = FetchType.EAGER)
     Set<Contenido> contenidos = new HashSet<>();
 
+
     @OneToMany(mappedBy = "materia", fetch = FetchType.EAGER)
     List<UsuarioMateria> usuarioMaterias = new ArrayList<>();
 

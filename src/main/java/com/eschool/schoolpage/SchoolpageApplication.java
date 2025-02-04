@@ -24,7 +24,7 @@ public class SchoolpageApplication {
 	@Bean
 	public CommandLineRunner initData(UsuarioRepository usuarioRepository, MateriaRepository materiaRepository, ContenidoRepository contenidoRepository,
 									  UsuarioMateriaRepository usuarioMateriaRepository, ComentarioRepository comentarioRepository,
-									  RespuestaRepository respuestaRepository) {
+									  RespuestaRepository respuestaRepository, ArchivoRepository archivoRepository) {
 		return (args) -> {
 
 			//-------------------------------------USUARIOS-------------------------------------------------
@@ -68,6 +68,37 @@ public class SchoolpageApplication {
 			contenidoRepository.save(contenido1Quimica);
 			contenidoRepository.save(contenido2Quimica);
 			//--------------------------------------------------------------------------------------
+
+
+
+
+			//-------------------------------------Agrego archivos a las contenidos-------------------------------------------------
+			Archivo archivo1PolinomiosMatematica = new Archivo("Polynomial calculus", "fa-brands fa-youtube", "https://www.youtube.com/watch?v=ueJtyB2Hg2I&ab_channel=Divertim%C3%A1ticas");
+			Archivo archivo2PolinomiosMatematica = new Archivo("Homework", "fa-solid fa-image", "https://www.profesor10demates.com/wp-content/uploads/2020/04/Ecuaciones-de-tercer-grado-ejercicios-resueltos.png");
+			contenido2Matematica.addArchivo(archivo1PolinomiosMatematica);
+			contenido2Matematica.addArchivo(archivo2PolinomiosMatematica);
+			archivoRepository.save(archivo1PolinomiosMatematica);
+			archivoRepository.save(archivo2PolinomiosMatematica);
+
+
+			Archivo archivo1ParabolasMatematica = new Archivo("PDF Parabola", "fa-solid fa-file-pdf", "https://www.webcolegios.com/file/4bc162.pdf");
+			contenido1Matematica.addArchivo(archivo1ParabolasMatematica);
+			archivoRepository.save(archivo1ParabolasMatematica);
+
+
+
+			Archivo archivo1GasesQuimica = new Archivo("PDF Gases", "fa-solid fa-file-pdf", "https://sgcciencias.wordpress.com/wp-content/uploads/2019/07/7-bc3a1sico-los-gases-y-sus-propiedades-.pdf");
+			Archivo archivo2GasesQuimica = new Archivo("Ideal gas calculation", "fa-brands fa-youtube", "https://www.youtube.com/watch?v=7uWK3GmeGzY&ab_channel=SusiProfe");
+			Archivo archivo3GasesQuimica = new Archivo("Homework", "fa-solid fa-image", "https://website-assets.studocu.com/img/document_thumbnails/a28840d67c3e024d11cd5e47f4ab801e/thumb_1200_1553.png");
+			contenido1Quimica.addArchivo(archivo1GasesQuimica);
+			contenido1Quimica.addArchivo(archivo2GasesQuimica);
+			contenido1Quimica.addArchivo(archivo3GasesQuimica);
+			archivoRepository.save(archivo1GasesQuimica);
+			archivoRepository.save(archivo2GasesQuimica);
+			archivoRepository.save(archivo3GasesQuimica);
+			//----------------------------------------------------------------------------------------------------------------------------------
+
+
 
 
 			//-------------------------------------Agrego comentarios a los contenidos-------------------------------------------------

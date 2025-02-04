@@ -27,7 +27,6 @@ public class RespuestaDTO {
         this.nombreUsuario = respuesta.getUsuario().getName() + " " + respuesta.getUsuario().getLastName();
         this.profileImgFromUserAnswer = respuesta.getUsuario().getProfileUserImage();
         this.usuarioId = respuesta.getUsuario().getId();
-        //this.respuestaPara  = respuesta.getComentario().getUsuario().getName() + " " + respuesta.getComentario().getUsuario().getLastName();
         this.respuestaPara  = respuesta.getRespuestaPara();
     }
 

@@ -50,7 +50,8 @@ public class WebConfiguration {
                                         .requestMatchers("/api/usuarios/loginMateria", "/api/respuesta/create", "/api/respuesta/modificar",
                                                 "/api/auth/current", "/api/comentario/create", "/api/comentario/authenticatedUserDesactivar/**",
                                                 "/api/respuesta/authenticatedUserDesactivar/**").hasAnyRole("ALUMNO", "PROFESOR")
-                                        .requestMatchers("/api/materias/modificarMateria", "/api/contenido/create", "/api/contenido/modificar", "/api/contenido/desactivar/**", "/api/respuesta/authenticatedUserDesactivar/**",
+                                        .requestMatchers("/api/materias/modificarMateria","/api/archivo", "/api/archivo/", "/api/archivo/**", "/api/archivo/editFile", "/api/contenido/create",
+                                                "/api/contenido/modificar", "/api/contenido/desactivar/**", "/api/respuesta/authenticatedUserDesactivar/**",
                                                 "/api/contenido/activar/**", "/api/comentario/authenticatedUserDesactivar/**").hasAnyRole("PROFESOR", "ADMIN")
 
                                         //.requestMatchers("/h2-console/**").permitAll()

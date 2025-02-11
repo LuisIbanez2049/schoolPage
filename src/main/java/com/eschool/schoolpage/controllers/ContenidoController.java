@@ -1,13 +1,8 @@
 package com.eschool.schoolpage.controllers;
 
-import com.eschool.schoolpage.dtos.ContenidoAdminDTO;
-import com.eschool.schoolpage.dtos.ContenidoDTO;
-import com.eschool.schoolpage.dtos.RecordCrearContenido;
-import com.eschool.schoolpage.dtos.RecordModificarContenido;
-import com.eschool.schoolpage.models.Contenido;
-import com.eschool.schoolpage.models.Materia;
-import com.eschool.schoolpage.models.Rol;
-import com.eschool.schoolpage.models.Usuario;
+import com.eschool.schoolpage.dtos.*;
+import com.eschool.schoolpage.models.*;
+import com.eschool.schoolpage.repositories.ArchivoRepository;
 import com.eschool.schoolpage.repositories.ContenidoRepository;
 import com.eschool.schoolpage.repositories.MateriaRepository;
 import com.eschool.schoolpage.repositories.UsuarioRepository;
@@ -18,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,6 +29,9 @@ public class ContenidoController {
 
     @Autowired
     private MateriaRepository materiaRepository;
+
+    @Autowired
+    private ArchivoRepository archivoRepository;
 
     @GetMapping("/")
     public ResponseEntity<?> getAllContenidos(Authentication authentication){
@@ -102,16 +101,32 @@ public class ContenidoController {
             if (recordCrearContenido.detalleContenido().isEmpty()) {
                 return new ResponseEntity<>("El contenido debe ser especificado.", HttpStatus.BAD_REQUEST);
             }
-            if (recordCrearContenido.archivo().isEmpty()) {
-                return new ResponseEntity<>("El archivo debe ser especificado.", HttpStatus.BAD_REQUEST);
+//            if (recordCrearContenido.archivo().isEmpty()) {
+//                return new ResponseEntity<>("El archivo debe ser especificado.", HttpStatus.BAD_REQUEST);
+//            }
+
+            FileObject fileObject = recordCrearContenido.fileObjectList().stream().findFirst().orElse(null);
+            if ((fileObject.getTitle().isEmpty() || fileObject.getTitle().isBlank()) && (fileObject.getLink().isEmpty() || fileObject.getLink().isBlank()) ) {
+                Contenido newContenido = new Contenido(recordCrearContenido.titulo(), LocalDateTime.now(), recordCrearContenido.detalleContenido(), recordCrearContenido.archivo());
+                materia.addContenido(newContenido);
+                contenidoRepository.save(newContenido);
+                return new ResponseEntity<>("CONTENIDO CREADO CON EXITO SIN ARCHIVOS", HttpStatus.OK);
             }
+
             Contenido newContenido = new Contenido(recordCrearContenido.titulo(), LocalDateTime.now(), recordCrearContenido.detalleContenido(), recordCrearContenido.archivo());
             materia.addContenido(newContenido);
             contenidoRepository.save(newContenido);
 
+            if (recordCrearContenido.fileObjectList() != null && !recordCrearContenido.fileObjectList().isEmpty()) {
+                for (FileObject fileObject1 : recordCrearContenido.fileObjectList()) {
+                    Archivo archivo = new Archivo(fileObject1.getTitle(), fileObject1.getFileLogo(), fileObject1.getLink());
+                    newContenido.addArchivo(archivo);
+                    archivo.setContenido(newContenido);
+                    archivoRepository.save(archivo);
+                }
+            } else { return new ResponseEntity<>("THERE ISN´T FILES", HttpStatus.OK); }
 
-
-            return new ResponseEntity<>("CONTENIDO CREADO CON EXITO", HttpStatus.OK);
+            return new ResponseEntity<>("CONTENIDO CREADO CON EXITO CON ARCHIVOS", HttpStatus.OK);
 
         } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
     }

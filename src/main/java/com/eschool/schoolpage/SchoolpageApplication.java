@@ -77,12 +77,16 @@ public class SchoolpageApplication {
 			Archivo archivo2PolinomiosMatematica = new Archivo("Homework", "fa-solid fa-image", "https://www.profesor10demates.com/wp-content/uploads/2020/04/Ecuaciones-de-tercer-grado-ejercicios-resueltos.png");
 			contenido2Matematica.addArchivo(archivo1PolinomiosMatematica);
 			contenido2Matematica.addArchivo(archivo2PolinomiosMatematica);
+
+			archivo1PolinomiosMatematica.setContenido(contenido2Matematica);
+			archivo2PolinomiosMatematica.setContenido(contenido2Matematica);
 			archivoRepository.save(archivo1PolinomiosMatematica);
 			archivoRepository.save(archivo2PolinomiosMatematica);
 
 
 			Archivo archivo1ParabolasMatematica = new Archivo("PDF Parabola", "fa-solid fa-file-pdf", "https://www.webcolegios.com/file/4bc162.pdf");
 			contenido1Matematica.addArchivo(archivo1ParabolasMatematica);
+			archivo1ParabolasMatematica.setContenido(contenido1Matematica);
 			archivoRepository.save(archivo1ParabolasMatematica);
 
 
@@ -93,6 +97,10 @@ public class SchoolpageApplication {
 			contenido1Quimica.addArchivo(archivo1GasesQuimica);
 			contenido1Quimica.addArchivo(archivo2GasesQuimica);
 			contenido1Quimica.addArchivo(archivo3GasesQuimica);
+
+			archivo1GasesQuimica.setContenido(contenido1Quimica);
+			archivo2GasesQuimica.setContenido(contenido1Quimica);
+			archivo3GasesQuimica.setContenido(contenido1Quimica);
 			archivoRepository.save(archivo1GasesQuimica);
 			archivoRepository.save(archivo2GasesQuimica);
 			archivoRepository.save(archivo3GasesQuimica);

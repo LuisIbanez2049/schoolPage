@@ -32,11 +32,10 @@ public class Contenido {
     //----------------------------Métodos Constructor------------------------------------
     public Contenido() { }
 
-    public Contenido(String titulo, LocalDateTime fechaDePublicacion, String detalleDelContenido, String archivo) {
+    public Contenido(String titulo, LocalDateTime fechaDePublicacion, String detalleDelContenido) {
         this.titulo = titulo;
         this.fechaDePublicacion = fechaDePublicacion;
         this.detalleDelContenido = detalleDelContenido;
-        this.archivo = archivo;
     }
     //--------------------------------------------------------------------------------------
 

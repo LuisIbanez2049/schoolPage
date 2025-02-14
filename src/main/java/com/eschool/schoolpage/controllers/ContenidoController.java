@@ -107,13 +107,13 @@ public class ContenidoController {
 
             FileObject fileObject = recordCrearContenido.fileObjectList().stream().findFirst().orElse(null);
             if ((fileObject.getTitle().isEmpty() || fileObject.getTitle().isBlank()) && (fileObject.getLink().isEmpty() || fileObject.getLink().isBlank()) ) {
-                Contenido newContenido = new Contenido(recordCrearContenido.titulo(), LocalDateTime.now(), recordCrearContenido.detalleContenido(), recordCrearContenido.archivo());
+                Contenido newContenido = new Contenido(recordCrearContenido.titulo(), LocalDateTime.now(), recordCrearContenido.detalleContenido());
                 materia.addContenido(newContenido);
                 contenidoRepository.save(newContenido);
                 return new ResponseEntity<>("CONTENIDO CREADO CON EXITO SIN ARCHIVOS", HttpStatus.OK);
             }
 
-            Contenido newContenido = new Contenido(recordCrearContenido.titulo(), LocalDateTime.now(), recordCrearContenido.detalleContenido(), recordCrearContenido.archivo());
+            Contenido newContenido = new Contenido(recordCrearContenido.titulo(), LocalDateTime.now(), recordCrearContenido.detalleContenido());
             materia.addContenido(newContenido);
             contenidoRepository.save(newContenido);
 

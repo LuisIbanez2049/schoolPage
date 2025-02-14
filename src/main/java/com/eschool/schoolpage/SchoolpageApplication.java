@@ -51,8 +51,8 @@ public class SchoolpageApplication {
 
 
 			//-------------------------------------Agrego contenido a las materias-------------------------------------------------
-			Contenido contenido1Matematica = new Contenido("Parabolas", LocalDateTime.now(), "Hablamos sobre como calcular las parabolas", "https://drive.google.com/file/d/1JZbeO-zW9rraskFvcyyWDiNMyBkoVlBz/view?usp=drive_link");
-			Contenido contenido2Matematica = new Contenido("Polinomios", LocalDateTime.now(), "Calculo de polinomios de 1er a 3er grado", "https://drive.google.com/file/d/1JZbeO-zW9rraskFvcyyWDiNMyBkoVlBz/view?usp=drive_link");
+			Contenido contenido1Matematica = new Contenido("Parabolas", LocalDateTime.now(), "Hablamos sobre como calcular las parabolas");
+			Contenido contenido2Matematica = new Contenido("Polinomios", LocalDateTime.now(), "Calculo de polinomios de 1er a 3er grado");
 
 			matematica.addContenido(contenido1Matematica);
 			matematica.addContenido(contenido2Matematica);
@@ -60,8 +60,8 @@ public class SchoolpageApplication {
 			contenidoRepository.save(contenido2Matematica);
 
 
-			Contenido contenido1Quimica = new Contenido("Gases", LocalDateTime.now(), "Hablamos sobre los tipos de gases", "https://drive.google.com/file/d/1JZbeO-zW9rraskFvcyyWDiNMyBkoVlBz/view?usp=drive_link");
-			Contenido contenido2Quimica = new Contenido("Estados", LocalDateTime.now(), "Hablamos sobre los distitos estados de la materia", "https://drive.google.com/file/d/1JZbeO-zW9rraskFvcyyWDiNMyBkoVlBz/view?usp=drive_link");
+			Contenido contenido1Quimica = new Contenido("Gases", LocalDateTime.now(), "Hablamos sobre los tipos de gases");
+			Contenido contenido2Quimica = new Contenido("Estados", LocalDateTime.now(), "Hablamos sobre los distitos estados de la materia");
 
 			quimica.addContenido(contenido1Quimica);
 			quimica.addContenido(contenido2Quimica);

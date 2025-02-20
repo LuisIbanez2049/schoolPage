@@ -50,14 +50,15 @@ public class WebConfiguration {
                                         .requestMatchers("/api/usuarios/loginMateria", "/api/respuesta/create", "/api/respuesta/modificar",
                                                 "/api/auth/current", "/api/comentario/create", "/api/comentario/authenticatedUserDesactivar/**",
                                                 "/api/respuesta/authenticatedUserDesactivar/**").hasAnyRole("ALUMNO", "PROFESOR")
-                                        .requestMatchers("/api/materias/modificarMateria","/api/archivo", "/api/archivo/", "/api/archivo/**", "/api/archivo/editFile", "/api/contenido/create",
-                                                "/api/contenido/modificar", "/api/contenido/desactivar/**", "/api/respuesta/authenticatedUserDesactivar/**",
+                                        .requestMatchers("/api/materias/modificarMateria","/api/archivo", "/api/archivo/", "/api/archivo/**", "/api/archivo/editFile", "api/contenido/addFiles",
+                                                "/api/archivo/delete/**", "/api/contenido/create", "/api/contenido/modificar", "/api/contenido/desactivar/**", "/api/respuesta/authenticatedUserDesactivar/**",
                                                 "/api/contenido/activar/**", "/api/comentario/authenticatedUserDesactivar/**").hasAnyRole("PROFESOR", "ADMIN")
 
                                         //.requestMatchers("/h2-console/**").permitAll()
                                         // Permite el acceso sin autenticación a las rutas especificadas (login, registro, y consola H2).
-                                        .requestMatchers( "/api/usuarios/", "/api/usuarios/admin/**", "/api/respuesta/", "/api/materias/create","/api/materias/all", "/api/materias/modificarMateriaAdmin", "/api/materias/admin/**", "/api/contenido/", "/api/contenido/all",
-                                                "/api/contenido/admin/**","/api/comentario/", "/api/usuarios/configurationAdmin", "/api/comentario/admin/**", "/api/respuesta/**", "/api/respuesta/admin/**", "/api/usuarios/**",
+                                        .requestMatchers( "/api/usuarios/", "/api/usuarios/admin/**", "/api/respuesta/", "/api/materias/create","/api/materias/all", "/api/materias/modificarMateriaAdmin",
+                                                "/api/materias/admin/**", "/api/contenido/", "/api/contenido/all", "/api/archivo/restore/**", "/api/contenido/admin/**","/api/comentario/",
+                                                "/api/usuarios/configurationAdmin", "/api/comentario/admin/**", "/api/respuesta/**", "/api/respuesta/admin/**", "/api/usuarios/**",
                                                 "/api/respuesta/adminDesactivar/**", "/api/respuesta/adminActivar/**", "/h2-console/**", "/api/materias/activar/**", "/api/contenido/", "/api/materias/desactivar/**",
                                                 "/api/comentario/", "/api/comentario/adminDesactivar/**", "/api/comentario/adminActivar/**").hasRole("ADMIN")
                                         .requestMatchers("/api/auth/login", "/api/auth/register").permitAll()

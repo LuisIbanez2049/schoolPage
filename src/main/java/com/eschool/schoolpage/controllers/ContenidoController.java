@@ -131,6 +131,27 @@ public class ContenidoController {
         } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
     }
 
+    @PatchMapping("/addFiles")
+    public ResponseEntity<?> addFilesToContent(Authentication authentication, @RequestBody RecordAddFilesToContent recordAddFilesToContent){
+        try {
+            Contenido contenido = contenidoRepository.findById(recordAddFilesToContent.contentId()).orElse(null);
+            if (contenido == null) {
+                return new ResponseEntity<>("Content with id ¨" + recordAddFilesToContent.contentId() + "¨ not found", HttpStatus.NOT_FOUND);
+            }
+            FileObject fileObject = recordAddFilesToContent.fileObjectList().stream().findFirst().orElse(null);
+            if ((!fileObject.getTitle().isEmpty() || !fileObject.getTitle().isBlank()) && (!fileObject.getLink().isEmpty() || !fileObject.getLink().isBlank())) {
+                for (FileObject fileObject1 : recordAddFilesToContent.fileObjectList()) {
+                    Archivo archivo = new Archivo(fileObject1.getTitle(), fileObject1.getFileLogo(), fileObject1.getLink());
+                    contenido.addArchivo(archivo);
+                    archivo.setContenido(contenido);
+                    archivoRepository.save(archivo);
+                }
+            }
+            return new ResponseEntity<>("Files were added to content ¨" + contenido.getTitulo() + "¨ successfully.", HttpStatus.OK);
+
+        } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
+    }
+
     @PatchMapping("/modificar")
     public ResponseEntity<?> modificarContenido(Authentication authentication,@RequestBody RecordModificarContenido recordModificarContenido){
         try {

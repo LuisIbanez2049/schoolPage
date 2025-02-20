@@ -88,4 +88,30 @@ public class ArchivoController {
             return new ResponseEntity<>("File modify successfully.", HttpStatus.OK);
         } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteFile(Authentication authentication, @PathVariable Long id){
+        try {
+            Archivo archivo = archivoRepository.findById(id).orElse(null);
+            if (archivo == null) {
+                return  new ResponseEntity<>("File not found with id: " + id, HttpStatus.NOT_FOUND);
+            }
+            archivo.setAsset(false);
+            archivoRepository.save(archivo);
+            return new ResponseEntity<>("File ¨" + id + "¨" + " was deleted successfully.", HttpStatus.OK);
+        } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
+    }
+
+    @PatchMapping("/restore/{id}")
+    public ResponseEntity<?> activateDeletedFile(Authentication authentication, @PathVariable Long id){
+        try {
+            Archivo archivo = archivoRepository.findById(id).orElse(null);
+            if (archivo == null) {
+                return  new ResponseEntity<>("File not found with id: " + id, HttpStatus.NOT_FOUND);
+            }
+            archivo.setAsset(true);
+            archivoRepository.save(archivo);
+            return new ResponseEntity<>("File ¨" + id + "¨" + " was restored successfully.", HttpStatus.OK);
+        } catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
+    }
 }

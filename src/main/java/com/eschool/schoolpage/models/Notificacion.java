@@ -3,6 +3,7 @@ package com.eschool.schoolpage.models;
 import com.eschool.schoolpage.dtos.RespuestaDTO;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,7 +14,13 @@ public class Notificacion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String texto = "hola";
+    private LocalDateTime localDateTime;
+    private String mensajeDe;
+    private String texto;
+    private boolean visto;
+    private String materia;
+    private String contenido;
+    private boolean asset;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "usuario_id")

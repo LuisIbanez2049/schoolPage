@@ -179,6 +179,10 @@ public class SchoolpageApplication {
 			//--------------------------------------------------------------------------------------
 
 
+
+
+
+			//-------------------------------------Agrego notificaciones a los usuarios-------------------------------------------------
 			Notificacion notificacion1 = new Notificacion();
 			notificacion1.setTexto("ws");
 			notificacion1.setUsuario(luis);
@@ -193,6 +197,7 @@ public class SchoolpageApplication {
 
 			notificacionRepository.save(notificacion1);
 			notificacionRepository.save(notificacion2);
+			//-------------------------------------------------------------------------------------------------------------------------
 
 
 

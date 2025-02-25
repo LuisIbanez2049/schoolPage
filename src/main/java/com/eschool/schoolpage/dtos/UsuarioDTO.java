@@ -2,7 +2,6 @@ package com.eschool.schoolpage.dtos;
 
 import com.eschool.schoolpage.models.Rol;
 import com.eschool.schoolpage.models.Usuario;
-import com.eschool.schoolpage.models.UsuarioMateria;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +37,7 @@ public class UsuarioDTO {
                 .map(comentario -> new ComentarioDTO(comentario)).collect(Collectors.toList());
         this.respuestaDTOS = usuario.getRespuestas().stream().filter(respuesta -> respuesta.isAsset())
                 .map(respuesta -> new RespuestaDTO(respuesta)).collect(Collectors.toList());
+
     }
 
     public Long getId() {
@@ -87,4 +87,5 @@ public class UsuarioDTO {
     public String getUserProfileImg() {
         return userProfileImg;
     }
+
 }

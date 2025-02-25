@@ -33,6 +33,7 @@ public class Usuario {
     private List<Respuesta> respuestas = new ArrayList<>();
 
 
+
     //----------------------------Métodos Constructor------------------------------------
     public Usuario() { }
 
@@ -164,6 +165,7 @@ public class Usuario {
         this.respuestas.add(respuesta);
 
     }
+
 
 
 }

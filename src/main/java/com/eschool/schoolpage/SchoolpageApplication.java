@@ -178,11 +178,6 @@ public class SchoolpageApplication {
 			//--------------------------------------------------------------------------------------
 
 
-
-
-
-
-
 			//-------------------------------------Asocio las materias con los usuarios-------------------------------------------------
 			UsuarioMateria luisMateria1 = new UsuarioMateria(JornadaTurno.MORNING);
 			luis.addUsuarioMateria(luisMateria1);

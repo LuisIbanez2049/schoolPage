@@ -21,6 +21,8 @@ public class UsuarioDTO {
     private List<ComentarioDTO> comentarioDTOS = new ArrayList<>();
     private List<RespuestaDTO> respuestaDTOS = new ArrayList<>();
 
+    private List<NotificacionDTO> notificacionDTOS = new ArrayList<>();
+
     public UsuarioDTO(Usuario usuario) {
         this.id = usuario.getId();
         this.name = usuario.getName();
@@ -37,6 +39,8 @@ public class UsuarioDTO {
                 .map(comentario -> new ComentarioDTO(comentario)).collect(Collectors.toList());
         this.respuestaDTOS = usuario.getRespuestas().stream().filter(respuesta -> respuesta.isAsset())
                 .map(respuesta -> new RespuestaDTO(respuesta)).collect(Collectors.toList());
+
+        this.notificacionDTOS = usuario.getNotificaciones().stream().map(notificacion -> new NotificacionDTO(notificacion)).collect(Collectors.toList());
 
     }
 
@@ -88,4 +92,7 @@ public class UsuarioDTO {
         return userProfileImg;
     }
 
+    public List<NotificacionDTO> getNotificacionDTOS() {
+        return notificacionDTOS;
+    }
 }

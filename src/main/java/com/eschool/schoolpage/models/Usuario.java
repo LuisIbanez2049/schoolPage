@@ -1,7 +1,9 @@
 package com.eschool.schoolpage.models;
 
+import com.eschool.schoolpage.dtos.RespuestaDTO;
 import jakarta.persistence.*;
 
+import javax.management.Notification;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -23,6 +25,8 @@ public class Usuario {
     private boolean estaEnUnaMateria = false;
     private String profileUserImage;
 
+
+
     @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
     private List<UsuarioMateria> usuarioMaterias = new ArrayList<>();
 
@@ -31,6 +35,9 @@ public class Usuario {
 
     @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
     private List<Respuesta> respuestas = new ArrayList<>();
+
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
+    private List<Notificacion> notificaciones =  new ArrayList<>();
 
 
 
@@ -151,6 +158,16 @@ public class Usuario {
     public void setProfileUserImage(String profileUserImage) {
         this.profileUserImage = profileUserImage;
     }
+
+    public List<Notificacion> getNotificaciones() {
+        return notificaciones;
+    }
+
+    public void setNotificaciones(List<Notificacion> notificaciones) {
+        this.notificaciones = notificaciones;
+    }
+
+
     //--------------------------------------------------------------------------------------
 
     public void addUsuarioMateria(UsuarioMateria usuarioMateria){
@@ -165,6 +182,11 @@ public class Usuario {
         this.respuestas.add(respuesta);
 
     }
+
+    public void addNotificacion(Notificacion notificacion){
+        this.notificaciones.add(notificacion);
+    }
+
 
 
 

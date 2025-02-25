@@ -19,6 +19,7 @@ public class Respuesta {
     @JoinColumn(name = "comentario_id")
     private Comentario comentario;
 
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
@@ -32,6 +33,8 @@ public class Respuesta {
         this.fecha = fecha;
     }
     //--------------------------------------------------------------------------------------
+
+
 
 
     //----------------------------Métodos GETTER Y SETTER------------------------------------
@@ -87,6 +90,8 @@ public class Respuesta {
     public void setRespuestaPara(String respuestaPara) {
         this.respuestaPara = respuestaPara;
     }
+
+
     //--------------------------------------------------------------------------------------
 
 }

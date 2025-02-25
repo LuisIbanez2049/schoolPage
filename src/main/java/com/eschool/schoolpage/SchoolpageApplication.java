@@ -1,5 +1,6 @@
 package com.eschool.schoolpage;
 
+import com.eschool.schoolpage.dtos.RespuestaDTO;
 import com.eschool.schoolpage.models.*;
 import com.eschool.schoolpage.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class SchoolpageApplication {
 	@Bean
 	public CommandLineRunner initData(UsuarioRepository usuarioRepository, MateriaRepository materiaRepository, ContenidoRepository contenidoRepository,
 									  UsuarioMateriaRepository usuarioMateriaRepository, ComentarioRepository comentarioRepository,
-									  RespuestaRepository respuestaRepository, ArchivoRepository archivoRepository) {
+									  RespuestaRepository respuestaRepository, ArchivoRepository archivoRepository, NotificacionRepository notificacionRepository) {
 		return (args) -> {
 
 			//-------------------------------------USUARIOS-------------------------------------------------
@@ -176,6 +177,26 @@ public class SchoolpageApplication {
 			usuarioRepository.save(luis);
 			respuestaRepository.save(respuesta2Comentario1MatematicaContenido2);
 			//--------------------------------------------------------------------------------------
+
+
+			Notificacion notificacion1 = new Notificacion();
+			notificacion1.setTexto("ws");
+			notificacion1.setUsuario(luis);
+			luis.addNotificacion(notificacion1);
+			//notificacion1.setRespuesta(respuesta1Comentario1QuimicaContenido1);
+
+			Notificacion notificacion2 = new Notificacion();
+			notificacion2.setUsuario(luis);
+			notificacion2.setTexto(respuesta1Comentario1MatematicaContenido2.getTexto());
+			luis.addNotificacion(notificacion2);
+			//notificacion2.setRespuesta(respuesta1Comentario1MatematicaContenido2);
+
+			notificacionRepository.save(notificacion1);
+			notificacionRepository.save(notificacion2);
+
+
+
+
 
 
 			//-------------------------------------Asocio las materias con los usuarios-------------------------------------------------

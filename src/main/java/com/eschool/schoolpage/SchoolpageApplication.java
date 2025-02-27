@@ -183,20 +183,34 @@ public class SchoolpageApplication {
 
 
 			//-------------------------------------Agrego notificaciones a los usuarios-------------------------------------------------
-			Notificacion notificacion1 = new Notificacion();
-			notificacion1.setTexto("ws");
+			Notificacion notificacion1 = new Notificacion(respuesta1Comentario1QuimicaContenido1.getUsuario().getName() + " " + respuesta1Comentario1QuimicaContenido1.getUsuario().getLastName(),
+					respuesta1Comentario1QuimicaContenido1.getTexto(), respuesta1Comentario1QuimicaContenido1.getComentario().getContenido().getMateria().getNombre(),
+					respuesta1Comentario1QuimicaContenido1.getComentario().getContenido().getTitulo(), respuesta1Comentario1QuimicaContenido1.getFecha());
+			//notificacion1.setTexto("ws");
 			notificacion1.setUsuario(luis);
 			luis.addNotificacion(notificacion1);
 			//notificacion1.setRespuesta(respuesta1Comentario1QuimicaContenido1);
 
-			Notificacion notificacion2 = new Notificacion();
+			Notificacion notificacion2 = new Notificacion(respuesta1Comentario1MatematicaContenido2.getUsuario().getName() + " " + respuesta1Comentario1MatematicaContenido2.getUsuario().getLastName(),
+					respuesta1Comentario1MatematicaContenido2.getTexto(), respuesta1Comentario1MatematicaContenido2.getComentario().getContenido().getMateria().getNombre(),
+					respuesta1Comentario1MatematicaContenido2.getComentario().getContenido().getTitulo(), respuesta1Comentario1MatematicaContenido2.getFecha());
 			notificacion2.setUsuario(luis);
-			notificacion2.setTexto(respuesta1Comentario1MatematicaContenido2.getTexto());
+			//notificacion2.setTexto(respuesta1Comentario1MatematicaContenido2.getTexto());
 			luis.addNotificacion(notificacion2);
 			//notificacion2.setRespuesta(respuesta1Comentario1MatematicaContenido2);
 
+
+			Notificacion notificacion3 = new Notificacion(respuesta2Comentario1MatematicaContenido2.getUsuario().getName() + " " + respuesta2Comentario1MatematicaContenido2.getUsuario().getLastName(),
+					respuesta2Comentario1MatematicaContenido2.getTexto(), respuesta2Comentario1MatematicaContenido2.getComentario().getContenido().getMateria().getNombre(),
+					respuesta2Comentario1MatematicaContenido2.getComentario().getContenido().getTitulo(), respuesta2Comentario1MatematicaContenido2.getFecha());
+			notificacion3.setUsuario(tony);
+			tony.addNotificacion(notificacion3);
+
+
+
 			notificacionRepository.save(notificacion1);
 			notificacionRepository.save(notificacion2);
+			notificacionRepository.save(notificacion3);
 			//-------------------------------------------------------------------------------------------------------------------------
 
 

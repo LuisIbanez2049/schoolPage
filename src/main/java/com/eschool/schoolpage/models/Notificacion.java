@@ -14,13 +14,13 @@ public class Notificacion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDateTime localDateTime;
     private String mensajeDe;
     private String texto;
-    private boolean visto;
+    private boolean visto = false;
     private String materia;
     private String contenido;
-    private boolean asset;
+    private boolean asset = true;
+    private LocalDateTime creacionDeRespuesta;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "usuario_id")
@@ -28,11 +28,16 @@ public class Notificacion {
 
 
 
+
     public Notificacion() {}
 
-
-
-
+    public Notificacion(String mensajeDe, String texto, String materia, String contenido, LocalDateTime creacionDeRespuesta) {
+        this.mensajeDe = mensajeDe;
+        this.texto = texto;
+        this.materia = materia;
+        this.contenido = contenido;
+        this.creacionDeRespuesta = creacionDeRespuesta;
+    }
 
     public Long getId() {
         return id;
@@ -56,6 +61,60 @@ public class Notificacion {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public String getMensajeDe() {
+        return mensajeDe;
+    }
+
+    public void setMensajeDe(String mensajeDe) {
+        this.mensajeDe = mensajeDe;
+    }
+
+    public boolean isVisto() {
+        return visto;
+    }
+
+    public void setVisto(boolean visto) {
+        this.visto = visto;
+    }
+
+    public String getMateria() {
+        return materia;
+    }
+
+    public void setMateria(String materia) {
+        this.materia = materia;
+    }
+
+    public String getContenido() {
+        return contenido;
+    }
+
+    public void setContenido(String contenido) {
+        this.contenido = contenido;
+    }
+
+    public boolean isAsset() {
+        return asset;
+    }
+
+    public void setAsset(boolean asset) {
+        this.asset = asset;
+    }
+
+    public LocalDateTime getCreacionDeRespuesta() {
+        return creacionDeRespuesta;
+    }
+
+    public void setCreacionDeRespuesta(LocalDateTime creacionDeRespuesta) {
+        this.creacionDeRespuesta = creacionDeRespuesta;
+    }
+
+    public String getTiempoTranscurrido() {
+        LocalDateTime fechaCreacion = creacionDeRespuesta;
+        LocalDateTime fechaActual = LocalDateTime.now();
+        return TimeDifference.calcularDiferencia(fechaCreacion, fechaActual);
     }
 
 }

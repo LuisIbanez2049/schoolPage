@@ -1,11 +1,9 @@
 package com.eschool.schoolpage.controllers;
 
 import com.eschool.schoolpage.dtos.*;
-import com.eschool.schoolpage.models.Comentario;
-import com.eschool.schoolpage.models.Contenido;
-import com.eschool.schoolpage.models.Respuesta;
-import com.eschool.schoolpage.models.Usuario;
+import com.eschool.schoolpage.models.*;
 import com.eschool.schoolpage.repositories.ComentarioRepository;
+import com.eschool.schoolpage.repositories.NotificacionRepository;
 import com.eschool.schoolpage.repositories.RespuestaRepository;
 import com.eschool.schoolpage.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +29,9 @@ public class RespuestaController {
 
     @Autowired
     private RespuestaRepository respuestaRepository;
+
+    @Autowired
+    private NotificacionRepository notificacionRepository;
 
     @GetMapping("/")
     public ResponseEntity<?> getAllRespuestas(Authentication authentication){
@@ -90,6 +91,14 @@ public class RespuestaController {
             newRespuesta.setUsuario(usuario);
             newRespuesta.setRespuestaPara(usuarioReceptor.getName() + " " + usuarioReceptor.getLastName());
             respuestaRepository.save(newRespuesta);
+
+            Usuario usuarioQueRecibeLaNotificacion = newRespuesta.getComentario().getUsuario();
+            Notificacion notificacion = new Notificacion(newRespuesta.getUsuario().getName() + " " + newRespuesta.getUsuario().getLastName(), newRespuesta.getTexto(),
+                    newRespuesta.getComentario().getContenido().getMateria().getNombre(), newRespuesta.getComentario().getContenido().getTitulo(), newRespuesta.getFecha());
+            notificacion.setUsuario(usuarioQueRecibeLaNotificacion);
+            usuarioQueRecibeLaNotificacion.addNotificacion(notificacion);
+            notificacionRepository.save(notificacion);
+
             return new ResponseEntity<>("Respuesta agregada", HttpStatus.OK);
         }  catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
     }

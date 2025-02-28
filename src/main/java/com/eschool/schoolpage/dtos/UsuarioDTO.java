@@ -1,9 +1,11 @@
 package com.eschool.schoolpage.dtos;
 
+import com.eschool.schoolpage.models.Notificacion;
 import com.eschool.schoolpage.models.Rol;
 import com.eschool.schoolpage.models.Usuario;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,6 +22,7 @@ public class UsuarioDTO {
     private List<UsuarioMateriaDTO> usuarioMaterias = new ArrayList<>();
     private List<ComentarioDTO> comentarioDTOS = new ArrayList<>();
     private List<RespuestaDTO> respuestaDTOS = new ArrayList<>();
+    private Notificacion notificacion;
 
     private List<NotificacionDTO> notificacionDTOS = new ArrayList<>();
 
@@ -40,7 +43,10 @@ public class UsuarioDTO {
         this.respuestaDTOS = usuario.getRespuestas().stream().filter(respuesta -> respuesta.isAsset())
                 .map(respuesta -> new RespuestaDTO(respuesta)).collect(Collectors.toList());
 
-        this.notificacionDTOS = usuario.getNotificaciones().stream().map(notificacion -> new NotificacionDTO(notificacion)).collect(Collectors.toList());
+        this.notificacionDTOS = usuario.getNotificaciones().stream().filter(notificacion1 -> notificacion1.isAsset())
+                .sorted(Comparator.comparing(Notificacion::getId).reversed()) // Ordena por ID descendente
+                .map(NotificacionDTO::new) // Convierte cada Notificacion a NotificacionDTO
+                .collect(Collectors.toList());
 
     }
 

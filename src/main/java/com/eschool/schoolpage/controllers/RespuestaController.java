@@ -92,7 +92,8 @@ public class RespuestaController {
             newRespuesta.setRespuestaPara(usuarioReceptor.getName() + " " + usuarioReceptor.getLastName());
             respuestaRepository.save(newRespuesta);
 
-            Usuario usuarioQueRecibeLaNotificacion = newRespuesta.getComentario().getUsuario();
+            //Usuario usuarioQueRecibeLaNotificacion = newRespuesta.getComentario().getUsuario();
+            Usuario usuarioQueRecibeLaNotificacion = usuarioRepository.findById(recordRespuesta.idUsuario()).orElse(null);
             Notificacion notificacion = new Notificacion(newRespuesta.getUsuario().getName() + " " + newRespuesta.getUsuario().getLastName(), newRespuesta.getTexto(),
                     newRespuesta.getComentario().getContenido().getMateria().getNombre(), newRespuesta.getComentario().getContenido().getTitulo(), newRespuesta.getFecha());
             notificacion.setUsuario(usuarioQueRecibeLaNotificacion);

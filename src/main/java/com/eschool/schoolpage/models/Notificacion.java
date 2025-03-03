@@ -15,6 +15,8 @@ public class Notificacion {
     private Long id;
 
     private String mensajeDe;
+    private String userImg;
+    private String typeNotification;
     private String texto;
     private boolean visto = false;
     private String materia;
@@ -31,8 +33,10 @@ public class Notificacion {
 
     public Notificacion() {}
 
-    public Notificacion(String mensajeDe, String texto, String materia, String contenido, LocalDateTime creacionDeRespuesta) {
+    public Notificacion(String mensajeDe,String userImg, String typeNotification, String texto, String materia, String contenido, LocalDateTime creacionDeRespuesta) {
         this.mensajeDe = mensajeDe;
+        this.userImg = userImg;
+        this.typeNotification = typeNotification;
         this.texto = texto;
         this.materia = materia;
         this.contenido = contenido;
@@ -105,6 +109,22 @@ public class Notificacion {
 
     public LocalDateTime getCreacionDeRespuesta() {
         return creacionDeRespuesta;
+    }
+
+    public String getTypeNotification() {
+        return typeNotification;
+    }
+
+    public void setTypeNotification(String typeNotification) {
+        this.typeNotification = typeNotification;
+    }
+
+    public String getUserImg() {
+        return userImg;
+    }
+
+    public void setUserImg(String userImg) {
+        this.userImg = userImg;
     }
 
     public void setCreacionDeRespuesta(LocalDateTime creacionDeRespuesta) {

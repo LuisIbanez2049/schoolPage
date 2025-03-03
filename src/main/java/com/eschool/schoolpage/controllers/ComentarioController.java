@@ -1,11 +1,10 @@
 package com.eschool.schoolpage.controllers;
 
 import com.eschool.schoolpage.dtos.*;
-import com.eschool.schoolpage.models.Comentario;
-import com.eschool.schoolpage.models.Contenido;
-import com.eschool.schoolpage.models.Usuario;
+import com.eschool.schoolpage.models.*;
 import com.eschool.schoolpage.repositories.ComentarioRepository;
 import com.eschool.schoolpage.repositories.ContenidoRepository;
+import com.eschool.schoolpage.repositories.NotificacionRepository;
 import com.eschool.schoolpage.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,6 +29,9 @@ public class ComentarioController {
 
     @Autowired
     private ContenidoRepository contenidoRepository;
+
+    @Autowired
+    private NotificacionRepository notificacionRepository;
 
     @GetMapping("/")
     public ResponseEntity<?> getAllComentarios(Authentication authentication){
@@ -83,6 +85,18 @@ public class ComentarioController {
             usuario.addComentario(newComentario);
             newComentario.setUsuario(usuario);
             comentarioRepository.save(newComentario);
+
+
+            List<UsuarioMateria> usuariosMateriaRolProfesor = contenido.getMateria().getUsuarioMaterias();
+            for (UsuarioMateria usuarioMateria : usuariosMateriaRolProfesor){
+                if (usuarioMateria.getUsuario().getRol().equals(Rol.PROFESOR)) {
+                    Notificacion notificacion = new Notificacion(usuario.getName() + " " + usuario.getLastName(),
+                            usuario.getProfileUserImage(),"has commented", newComentario.getTexto(),  contenido.getMateria().getNombre(), contenido.getTitulo(), newComentario.getFecha());
+                    notificacion.setUsuario(usuarioMateria.getUsuario());
+                    usuarioMateria.getUsuario().addNotificacion(notificacion);
+                    notificacionRepository.save(notificacion);
+                }
+            }
             return new ResponseEntity<>("Comentario agregado", HttpStatus.OK);
         }  catch (Exception e) { return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); }
     }

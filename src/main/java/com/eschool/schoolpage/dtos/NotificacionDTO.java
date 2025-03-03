@@ -9,6 +9,7 @@ import jakarta.persistence.ManyToOne;
 public class NotificacionDTO {
     private Long id;
     private String mensajeDe;
+    private String userImg;
     private String texto;
     private boolean visto = false;
     private String materia;
@@ -23,6 +24,7 @@ public class NotificacionDTO {
         this.id = notificacion.getId();
         this.texto = notificacion.getTexto();
         this.mensajeDe = notificacion.getMensajeDe();
+        this.userImg = notificacion.getUserImg();
         this.visto = notificacion.isVisto();
         this.asset = notificacion.isAsset();
         this.materia = notificacion.getMateria();
@@ -60,5 +62,9 @@ public class NotificacionDTO {
 
     public String getTiempoTranscurrido() {
         return tiempoTranscurrido;
+    }
+
+    public String getUserImg() {
+        return userImg;
     }
 }
